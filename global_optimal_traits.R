@@ -6,6 +6,7 @@ library(raster)
 library(RColorBrewer)
 library(maps)
 library(tidyverse)
+library(factoextra)
 
 ## source optimality model and related functions
 source('../optimal_vcmax_r/calc_optimal_vcmax.R')
@@ -36,6 +37,23 @@ global_optimal_traits <- calc_optimal_vcmax(tg_c = global_data$tmp,
 ## add lat/lon
 global_optimal_traits$lat <- global_data$lat
 global_optimal_traits$lon <- global_data$lon
+
+## pca
+### select and scale traits
+global_optimal_traits_scale <- scale(select(global_optimal_traits, lma, chi, vcmax, jmax, Al, nphoto))
+
+### fit pca
+global_optimal_traits_pca <- princomp(na.omit(global_optimal_traits_scale))
+summary(global_optimal_traits_pca)
+global_optimal_traits_pca$loadings[, 1:2]
+
+### plot results
+global_optimal_traits_pca_lineplot <- fviz_pca_var(global_optimal_traits_pca, col.var = "black")
+
+jpeg('results/plots/global_optimal_traits_pca_lineplot.jpeg')
+plot(global_optimal_traits_pca_lineplot)
+dev.off()
+
 
 ## read in MODIS land cover data (to filter out non-veg sites)
 modis_2001 = raster('data/landCoverMODIS/LC_hd_global_2001.tif')
