@@ -40,7 +40,7 @@ global_optimal_traits$lon <- global_data$lon
 
 ## pca
 ### select and scale traits
-global_optimal_traits_scale <- scale(select(global_optimal_traits, lma, chi, vcmax, jmax, Al, nphoto))
+global_optimal_traits_scale <- scale(select(global_optimal_traits, lma, chi, vcmax, jmax, Al, nall))
 
 ### fit pca
 global_optimal_traits_pca <- princomp(na.omit(global_optimal_traits_scale))
