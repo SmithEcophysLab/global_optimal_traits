@@ -16,42 +16,41 @@ sourceDirectory('../optimal_vcmax_r/functions')
 calc_optimal_vcmax()
 
 ## read in global environmental data
-global_tmp_data <- read.csv('data/cru_growingseason/cru_tmp_climExtract_growingseason_globe.csv')[,-1]
-global_vpd_data <- read.csv('data/cru_growingseason/cru_vpd_climExtract_growingseason_globe.csv')[,-1]
-global_par_data <- read.csv('data/cru_growingseason/cru_par_climExtract_growingseason_globe.csv')[,-1]
+cru_growingseason_data <- read.csv('data/cru_growingseason/cru_growingseason.csv')[,-1]
 global_z_data <- read.csv('data/watch_elevation/z_globe.csv')[,-1]
 
 ## read in phenology data
 
 ## combine datasets by lat/lon
-global_data <- left_join(global_tmp_data, global_vpd_data)
-global_data <- left_join(global_data, global_par_data)
-global_data <- left_join(global_data, global_z_data)
+global_data <- left_join(cru_growingseason_data, global_z_data)
 
-## run model
-global_optimal_traits <- calc_optimal_vcmax(tg_c = global_data$tmp, 
+## run model for c3 deciduous plants
+global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
+                                            deciduous = 'yes',
+                                            tg_c = global_data$tmp, 
                                             vpdo = global_data$vpd,
                                             paro = global_data$par,
-                                            z = global_data$z)
+                                            z = global_data$z,
+                                            f = global_data$f)
 
 ## add lat/lon
-global_optimal_traits$lat <- global_data$lat
-global_optimal_traits$lon <- global_data$lon
+global_optimal_traits_c3_deciduous$lat <- global_data$lat
+global_optimal_traits_c3_deciduous$lon <- global_data$lon
 
 ## pca
 ### select and scale traits
-global_optimal_traits_scale <- scale(select(global_optimal_traits, lma, chi, vcmax, jmax, Al, nall))
+global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, lma, chi, vcmax, jmax, Al, nall))
 
 ### fit pca
-global_optimal_traits_pca <- princomp(na.omit(global_optimal_traits_scale))
-summary(global_optimal_traits_pca)
-global_optimal_traits_pca$loadings[, 1:2]
+global_optimal_traits_c3_deciduous_pca <- princomp(na.omit(global_optimal_traits_c3_deciduous_scale))
+summary(global_optimal_traits_c3_deciduous_pca)
+global_optimal_traits_c3_deciduous_pca$loadings[, 1:2]
 
 ### plot results
-global_optimal_traits_pca_lineplot <- fviz_pca_var(global_optimal_traits_pca, col.var = "black")
+global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_var(global_optimal_traits_c3_deciduous_pca, col.var = "black")
 
-jpeg('results/plots/global_optimal_traits_pca_lineplot.jpeg')
-plot(global_optimal_traits_pca_lineplot)
+jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_lineplot.jpeg')
+plot(global_optimal_traits_c3_deciduous_pca_lineplot)
 dev.off()
 
 
