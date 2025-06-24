@@ -1,5 +1,6 @@
 # global_optimal_traits.R
 ## script to predict global optimal leaf traits
+## still a bit of work to do!
 
 ## load libraries
 library(raster)
