@@ -40,7 +40,8 @@ global_optimal_traits_c3_deciduous$lon <- global_data$lon
 
 ## pca
 ### select and scale traits
-global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, lma, chi, vcmax, jmax, Al, nall))
+global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, 
+                                                         lma, chi, vcmax25, jmax25, Al, nphoto, rd25))
 
 ### fit pca
 global_optimal_traits_c3_deciduous_pca <- princomp(na.omit(global_optimal_traits_c3_deciduous_scale))
@@ -48,12 +49,47 @@ summary(global_optimal_traits_c3_deciduous_pca)
 global_optimal_traits_c3_deciduous_pca$loadings[, 1:2]
 
 ### plot results
-global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_var(global_optimal_traits_c3_deciduous_pca, col.var = "black")
+global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_deciduous_pca, 
+                                                                   col.var = "black",
+                                                                   alpha.ind = 0.1,
+                                                                   geom = c("point"))
 
 jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_lineplot.jpeg')
 plot(global_optimal_traits_c3_deciduous_pca_lineplot)
 dev.off()
 
+## run model for c3 evergreen plants
+global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
+                                                         deciduous = 'no',
+                                                         tg_c = global_data$tmp, 
+                                                         vpdo = global_data$vpd,
+                                                         paro = global_data$par,
+                                                         z = global_data$z,
+                                                         f = global_data$f)
+
+## add lat/lon
+global_optimal_traits_c3_evergreen$lat <- global_data$lat
+global_optimal_traits_c3_evergreen$lon <- global_data$lon
+
+## pca
+### select and scale traits
+global_optimal_traits_c3_evergreen_scale <- scale(select(global_optimal_traits_c3_evergreen, 
+                                                         lma, chi, vcmax25, jmax25, Al, nphoto, rd25))
+
+### fit pca
+global_optimal_traits_c3_evergreen_pca <- princomp(na.omit(global_optimal_traits_c3_evergreen_scale))
+summary(global_optimal_traits_c3_evergreen_pca)
+global_optimal_traits_c3_evergreen_pca$loadings[, 1:2]
+
+### plot results
+global_optimal_traits_c3_evergreen_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_evergreen_pca, 
+                                                                   col.var = "black",
+                                                                   alpha.ind = 0.1,
+                                                                   geom = c("point"))
+
+jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_lineplot.jpeg')
+plot(global_optimal_traits_c3_evergreen_pca_lineplot)
+dev.off()
 
 ## read in MODIS land cover data (to filter out non-veg sites)
 modis_2001 = raster('data/landCoverMODIS/LC_hd_global_2001.tif')
