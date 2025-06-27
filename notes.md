@@ -12,3 +12,19 @@ interpretable PCA plots
 - next steps
 	- make plots with deciduous and evergreen and correct traits
 		- need to think about best traits to look at
+
+## june 25, 2025
+- fixed package dependencies
+- received PCA plot script from Alissar (see email)
+- next steps
+	- filter out non-vegetated areas and redo plots
+	
+## june 27, 2025
+- created figures with only vegetated land areas from modis
+- next steps
+	- figure out what we can glean from all this!
+		- chi and photosynthetic capacity are orthogonal
+			- nuances LCT
+			- photosynthesis is in the middle (of course?)
+		- n does different things for deciduous and evergreen
+	- add c4?
