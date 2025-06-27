@@ -66,7 +66,7 @@ global_optimal_traits_c3_deciduous$lon <- global_data_veg$lon
 ## pca
 ### select and scale traits
 global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, 
-                                                         lma, chi, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass))
+                                                         lma, chi, gsw, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
 
 ### fit pca
 global_optimal_traits_c3_deciduous_pca <- princomp(na.omit(global_optimal_traits_c3_deciduous_scale))
@@ -75,7 +75,7 @@ global_optimal_traits_c3_deciduous_pca$loadings[, 1:2]
 
 ### plot results
 global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_deciduous_pca, 
-                                                                   col.var = "black",
+                                                                   col.var = "red",
                                                                    alpha.ind = 0.01,
                                                                    geom = c("point"))
 
@@ -99,7 +99,7 @@ global_optimal_traits_c3_evergreen$lon <- global_data_veg$lon
 ## pca
 ### select and scale traits
 global_optimal_traits_c3_evergreen_scale <- scale(select(global_optimal_traits_c3_evergreen, 
-                                                         lma, chi, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass))
+                                                         lma, chi, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
 
 ### fit pca
 global_optimal_traits_c3_evergreen_pca <- princomp(na.omit(global_optimal_traits_c3_evergreen_scale))
@@ -108,7 +108,7 @@ global_optimal_traits_c3_evergreen_pca$loadings[, 1:2]
 
 ### plot results
 global_optimal_traits_c3_evergreen_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_evergreen_pca, 
-                                                                   col.var = "black",
+                                                                   col.var = "red",
                                                                    alpha.ind = 0.01,
                                                                    geom = c("point"))
 
@@ -116,9 +116,78 @@ jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_lineplot.jpeg')
 plot(global_optimal_traits_c3_evergreen_pca_lineplot)
 dev.off()
 
+## run model for c4 deciduous plants
+global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
+                                                         deciduous = 'yes',
+                                                         tg_c = global_data_veg$tmp, 
+                                                         vpdo = global_data_veg$vpd,
+                                                         paro = global_data_veg$par,
+                                                         z = global_data_veg$z,
+                                                         f = global_data_veg$f)
+
+## add lat/lon
+global_optimal_traits_c4_deciduous$lat <- global_data_veg$lat
+global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
+
+## pca
+### select and scale traits
+global_optimal_traits_c4_deciduous_scale <- scale(select(global_optimal_traits_c4_deciduous, 
+                                                         lma, chi, vpmax25, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
+
+### fit pca
+global_optimal_traits_c4_deciduous_pca <- princomp(na.omit(global_optimal_traits_c4_deciduous_scale))
+summary(global_optimal_traits_c4_deciduous_pca)
+global_optimal_traits_c4_deciduous_pca$loadings[, 1:2]
+
+### plot results
+global_optimal_traits_c4_deciduous_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c4_deciduous_pca, 
+                                                                   col.var = "red",
+                                                                   alpha.ind = 0.01,
+                                                                   geom = c("point"))
+
+jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_lineplot.jpeg')
+plot(global_optimal_traits_c4_deciduous_pca_lineplot)
+dev.off()
+
+
+## create map plots for each trait for each plant type
+### create color palette for maps
+pale = colorRampPalette(c('white', rev(brewer.pal(10,'Spectral'))))
+cols = pale(28)
+
+### c3 deciduous - vcmax25, nmass, chi, lma
+#### vcmax25
+hist(global_optimal_traits_c3_deciduous$vcmax25)
+arg_c3_deciduous_vcmax = list(at = seq(0, 210, 10), labels = seq(0, 210, 10))
+c3_deciduous_vcmax_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+                                                 global_optimal_traits_c3_deciduous$lat,
+                                                 global_optimal_traits_c3_deciduous$vcmax25))
+plot(c3_deciduous_vcmax_raster, col=cols, breaks = seq(0, 210, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+     lab.breaks = seq(0, 210, 10), ylim = c(-90, 90), 
+     legend.args=list(text=expression(italic('V'*"'")[cmax25]*' (µmol m'^'-2'*' s'^'-1'*')'), 
+                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax)
+maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
+axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
+
+#### lma
+hist(global_optimal_traits_c3_deciduous$lma)
+arg_c3_deciduous_vcmax = list(at = seq(0, 20000, 1000), labels = seq(0, 20000, 1000))
+c3_deciduous_vcmax_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+                                                 global_optimal_traits_c3_deciduous$lat,
+                                                 global_optimal_traits_c3_deciduous$lma))
+plot(c3_deciduous_vcmax_raster, col=cols, breaks = seq(0, 20000, 1000), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+     lab.breaks = seq(0, 20000, 1000), ylim = c(-90, 90), 
+     legend.args=list(text=expression(italic('M'*"'")[area]), 
+                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax)
+maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
+axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
 
 
+
+arg_lma = list(at = seq(0, 20000, 2000), labels = seq(0, 20000, 2000))
 
 
 

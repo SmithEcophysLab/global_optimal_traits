@@ -27,4 +27,4 @@ interpretable PCA plots
 			- nuances LCT
 			- photosynthesis is in the middle (of course?)
 		- n does different things for deciduous and evergreen
-	- add c4?
+	- added c4
