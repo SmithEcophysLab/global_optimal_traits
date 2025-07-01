@@ -157,37 +157,46 @@ cols = pale(28)
 
 ### c3 deciduous - vcmax25, nmass, chi, lma
 #### vcmax25
-hist(global_optimal_traits_c3_deciduous$vcmax25)
-arg_c3_deciduous_vcmax = list(at = seq(0, 210, 10), labels = seq(0, 210, 10))
-c3_deciduous_vcmax_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+hist(global_optimal_traits_c3_deciduous$vcmax2525)
+arg_c3_deciduous_vcmax25 = list(at = seq(0, 210, 10), labels = seq(0, 210, 10))
+c3_deciduous_vcmax25_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                  global_optimal_traits_c3_deciduous$lat,
-                                                 global_optimal_traits_c3_deciduous$vcmax25))
-plot(c3_deciduous_vcmax_raster, col=cols, breaks = seq(0, 210, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+                                                 global_optimal_traits_c3_deciduous$vcmax2525))
+plot(c3_deciduous_vcmax25_raster, col=cols, breaks = seq(0, 210, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
      lab.breaks = seq(0, 210, 10), ylim = c(-90, 90), 
      legend.args=list(text=expression(italic('V'*"'")[cmax25]*' (µmol m'^'-2'*' s'^'-1'*')'), 
-                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax)
+                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax25)
 maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
 axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
 axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
 #### lma
 hist(global_optimal_traits_c3_deciduous$lma)
-arg_c3_deciduous_vcmax = list(at = seq(0, 20000, 1000), labels = seq(0, 20000, 1000))
-c3_deciduous_vcmax_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+arg_c3_deciduous_lma = list(at = seq(0, 200, 10), labels = seq(0, 200, 10))
+c3_deciduous_lma_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                  global_optimal_traits_c3_deciduous$lat,
                                                  global_optimal_traits_c3_deciduous$lma))
-plot(c3_deciduous_vcmax_raster, col=cols, breaks = seq(0, 20000, 1000), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
-     lab.breaks = seq(0, 20000, 1000), ylim = c(-90, 90), 
+plot(c3_deciduous_lma_raster, col=cols, breaks = seq(0, 200, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+     lab.breaks = seq(0, 200, 10), ylim = c(-90, 90), 
      legend.args=list(text=expression(italic('M'*"'")[area]), 
-                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax)
+                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_lma)
 maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
 axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
 axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
-
-
-
-arg_lma = list(at = seq(0, 20000, 2000), labels = seq(0, 20000, 2000))
+#### nmass
+hist(global_optimal_traits_c3_deciduous$nmass)
+arg_c3_deciduous_nmass = list(at = seq(0, 0.02, 0.001), labels = seq(0, 0.02, 0.001))
+c3_deciduous_nmass_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+                                               global_optimal_traits_c3_deciduous$lat,
+                                               global_optimal_traits_c3_deciduous$nmass))
+plot(c3_deciduous_nmass_raster, col=cols, breaks = seq(0, 0.02, 0.001), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+     lab.breaks = seq(0, 0.02, 0.001), ylim = c(-90, 90), 
+     legend.args=list(text=expression(italic('M'*"'")[area]), 
+                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_nmass)
+maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
+axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
 
 
