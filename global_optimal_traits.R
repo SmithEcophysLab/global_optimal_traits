@@ -79,9 +79,9 @@ global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_biplot(global_optima
                                                                    alpha.ind = 0.01,
                                                                    geom = c("point"))
 
-jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_lineplot.jpeg')
-plot(global_optimal_traits_c3_deciduous_pca_lineplot)
-dev.off()
+# jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_lineplot.jpeg')
+# plot(global_optimal_traits_c3_deciduous_pca_lineplot)
+# dev.off()
 
 ## run model for c3 evergreen plants
 global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
@@ -112,9 +112,9 @@ global_optimal_traits_c3_evergreen_pca_lineplot <- fviz_pca_biplot(global_optima
                                                                    alpha.ind = 0.01,
                                                                    geom = c("point"))
 
-jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_lineplot.jpeg')
-plot(global_optimal_traits_c3_evergreen_pca_lineplot)
-dev.off()
+# jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_lineplot.jpeg')
+# plot(global_optimal_traits_c3_evergreen_pca_lineplot)
+# dev.off()
 
 ## run model for c4 deciduous plants
 global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
@@ -145,9 +145,9 @@ global_optimal_traits_c4_deciduous_pca_lineplot <- fviz_pca_biplot(global_optima
                                                                    alpha.ind = 0.01,
                                                                    geom = c("point"))
 
-jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_lineplot.jpeg')
-plot(global_optimal_traits_c4_deciduous_pca_lineplot)
-dev.off()
+# jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_lineplot.jpeg')
+# plot(global_optimal_traits_c4_deciduous_pca_lineplot)
+# dev.off()
 
 
 ## create map plots for each trait for each plant type
@@ -157,7 +157,7 @@ cols = pale(28)
 
 ### c3 deciduous - vcmax25, nmass, chi, lma
 #### vcmax25
-hist(global_optimal_traits_c3_deciduous$vcmax2525)
+hist(global_optimal_traits_c3_deciduous$vcmax25)
 arg_c3_deciduous_vcmax25 = list(at = seq(0, 210, 10), labels = seq(0, 210, 10))
 c3_deciduous_vcmax25_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                  global_optimal_traits_c3_deciduous$lat,
