@@ -67,25 +67,48 @@ global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
 global_optimal_traits_c3_deciduous$lat <- global_data_veg$lat
 global_optimal_traits_c3_deciduous$lon <- global_data_veg$lon
 
-## pca
-### select and scale traits
-global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, 
-                                                         lma, chi, gsw, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
-
-### fit pca
-global_optimal_traits_c3_deciduous_pca <- princomp(na.omit(global_optimal_traits_c3_deciduous_scale))
-summary(global_optimal_traits_c3_deciduous_pca)
-global_optimal_traits_c3_deciduous_pca$loadings[, 1:2]
-
-### plot results
-global_optimal_traits_c3_deciduous_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_deciduous_pca, 
-                                                                   col.var = "red",
-                                                                   alpha.ind = 0.01,
-                                                                   geom = c("point"))
-
-# jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_lineplot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_c3_deciduous_pca_lineplot)
-# dev.off()
+# ## pca
+# ### select and scale traits
+# global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, 
+#                                                          lma, Anet, wue, nue, nphoto, narea, tg_c, vpd, par))
+# 
+# ### fit pca
+# global_optimal_traits_c3_deciduous_pca <- prcomp(na.omit(global_optimal_traits_c3_deciduous_scale))
+# summary(global_optimal_traits_c3_deciduous_pca)
+# global_optimal_traits_c3_deciduous_pca$rotation[,1:3]
+# 
+# ### plot results
+# arrow_scale_c3_deciduous <- 5 # Scale factor for arrows and labels to extend from origin
+# label_scale_c3_deciduous <- 5.5
+# loadings_pca_c3_deciduous <- as.data.frame(global_optimal_traits_c3_deciduous_pca$rotation[, 1:2]) 
+# loadings_pca_c3_deciduous$trait <- rownames(loadings_pca_c3_deciduous) ## ad trait column
+# pca_scores_c3_deciduous <- as.data.frame(global_optimal_traits_c3_deciduous_pca$x) # get scores
+# loadings_pca_c3_deciduous$label_x <- with(loadings_pca_c3_deciduous, PC1 * label_scale_c3_deciduous)
+# loadings_pca_c3_deciduous$label_y <- with(loadings_pca_c3_deciduous, PC2 * label_scale_c3_deciduous)
+# 
+# global_optimal_traits_c3_deciduous_pca_plot <- ggplot(pca_scores_c3_deciduous, aes(x = PC1, y = PC2)) +
+#   theme_minimal(base_size = 14) +
+#   theme(axis.title = element_text(size = 18, face = "bold"),
+#     axis.text = element_text(size = 14),
+#     axis.line = element_line(color = "black", linewidth = 0.6),
+#     panel.grid.major = element_blank(),
+#     panel.grid.minor = element_blank()) +
+#   coord_equal() +
+#   geom_point(alpha = 0.03, size = 0.5) +
+#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+#   scale_fill_viridis_c(option = "turbo") +
+#   geom_segment(data = loadings_pca_c3_deciduous,
+#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c3_deciduous, yend = PC2 * arrow_scale_c3_deciduous),
+#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+#   geom_text(data = loadings_pca_c3_deciduous,
+#             aes(x = label_x, y = label_y, label = trait),
+#             size = 4, fontface = "bold", parse = TRUE) +
+#   labs(x = "PC1", y = "PC2") +
+#   guides(fill = guide_colorbar(title = "Density level"))
+# 
+# # jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# # plot(global_optimal_traits_c3_deciduous_pca_plot)
+# # dev.off()
 
 ## run model for c3 evergreen plants
 global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
@@ -100,58 +123,165 @@ global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
 global_optimal_traits_c3_evergreen$lat <- global_data_veg$lat
 global_optimal_traits_c3_evergreen$lon <- global_data_veg$lon
 
-## pca
-### select and scale traits
-global_optimal_traits_c3_evergreen_scale <- scale(select(global_optimal_traits_c3_evergreen, 
-                                                         lma, chi, gsw, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
+# ## pca
+# ### select and scale traits
+# global_optimal_traits_c3_evergreen_scale <- scale(select(global_optimal_traits_c3_evergreen, 
+#                                                          lma, Anet, wue, nue, nphoto, narea, tg_c, vpd, par))
+# 
+# ### fit pca
+# global_optimal_traits_c3_evergreen_pca <- prcomp(na.omit(global_optimal_traits_c3_evergreen_scale))
+# summary(global_optimal_traits_c3_evergreen_pca)
+# global_optimal_traits_c3_evergreen_pca$rotation[,1:3]
+# 
+# ### plot results
+# arrow_scale_c3_evergreen <- 5 # Scale factor for arrows and labels to extend from origin
+# label_scale_c3_evergreen <- 5.5
+# loadings_pca_c3_evergreen <- as.data.frame(global_optimal_traits_c3_evergreen_pca$rotation[, 1:2]) 
+# loadings_pca_c3_evergreen$trait <- rownames(loadings_pca_c3_evergreen) ## ad trait column
+# pca_scores_c3_evergreen <- as.data.frame(global_optimal_traits_c3_evergreen_pca$x) # get scores
+# loadings_pca_c3_evergreen$label_x <- with(loadings_pca_c3_evergreen, PC1 * label_scale_c3_evergreen)
+# loadings_pca_c3_evergreen$label_y <- with(loadings_pca_c3_evergreen, PC2 * label_scale_c3_evergreen)
+# 
+# global_optimal_traits_c3_evergreen_pca_plot <- ggplot(pca_scores_c3_evergreen, aes(x = PC1, y = PC2)) +
+#   theme_minimal(base_size = 14) +
+#   theme(axis.title = element_text(size = 18, face = "bold"),
+#         axis.text = element_text(size = 14),
+#         axis.line = element_line(color = "black", linewidth = 0.6),
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank()) +
+#   coord_equal() +
+#   geom_point(alpha = 0.03, size = 0.5) +
+#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+#   scale_fill_viridis_c(option = "turbo") +
+#   geom_segment(data = loadings_pca_c3_evergreen,
+#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c3_evergreen, yend = PC2 * arrow_scale_c3_evergreen),
+#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+#   geom_text(data = loadings_pca_c3_evergreen,
+#             aes(x = label_x, y = label_y, label = trait),
+#             size = 4, fontface = "bold", parse = TRUE) +
+#   labs(x = "PC1", y = "PC2") +
+#   guides(fill = guide_colorbar(title = "Density level"))
+# 
+# # jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# # plot(global_optimal_traits_c3_evergreen_pca_plot)
+# # dev.off()
+# 
+# ## run model for c4 deciduous plants
+# global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
+#                                                          deciduous = 'yes',
+#                                                          tg_c = global_data_veg$tmp, 
+#                                                          vpdo = global_data_veg$vpd,
+#                                                          paro = global_data_veg$par,
+#                                                          z = global_data_veg$z,
+#                                                          f = global_data_veg$f)
+# 
+# ## add lat/lon
+# global_optimal_traits_c4_deciduous$lat <- global_data_veg$lat
+# global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
+
+# ## pca
+# ### select and scale traits
+# global_optimal_traits_c4_deciduous_scale <- scale(select(global_optimal_traits_c4_deciduous, 
+#                                                          lma, chi, gsw, vpmax25, vcmax25, jmax25, Anet, wue, nue, nphoto, rd25, narea, nmass, tg_c, vpd, par))
+# 
+# ### fit pca
+# global_optimal_traits_c4_deciduous_pca <- prcomp(na.omit(global_optimal_traits_c4_deciduous_scale))
+# summary(global_optimal_traits_c4_deciduous_pca)
+# global_optimal_traits_c4_deciduous_pca$rotation[,1:3]
+# 
+# ### plot results
+# arrow_scale_c4_deciduous <- 5 # Scale factor for arrows and labels to extend from origin
+# label_scale_c4_deciduous <- 5.5
+# loadings_pca_c4_deciduous <- as.data.frame(global_optimal_traits_c4_deciduous_pca$rotation[, 1:2]) 
+# loadings_pca_c4_deciduous$trait <- rownames(loadings_pca_c4_deciduous) ## ad trait column
+# pca_scores_c4_deciduous <- as.data.frame(global_optimal_traits_c4_deciduous_pca$x) # get scores
+# loadings_pca_c4_deciduous$label_x <- with(loadings_pca_c4_deciduous, PC1 * label_scale_c4_deciduous)
+# loadings_pca_c4_deciduous$label_y <- with(loadings_pca_c4_deciduous, PC2 * label_scale_c4_deciduous)
+# 
+# global_optimal_traits_c4_deciduous_pca_plot <- ggplot(pca_scores_c4_deciduous, aes(x = PC1, y = PC2)) +
+#   theme_minimal(base_size = 14) +
+#   theme(axis.title = element_text(size = 18, face = "bold"),
+#         axis.text = element_text(size = 14),
+#         axis.line = element_line(color = "black", linewidth = 0.6),
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank()) +
+#   coord_equal() +
+#   geom_point(alpha = 0.03, size = 0.5) +
+#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+#   scale_fill_viridis_c(option = "turbo") +
+#   geom_segment(data = loadings_pca_c4_deciduous,
+#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c4_deciduous, yend = PC2 * arrow_scale_c4_deciduous),
+#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+#   geom_text(data = loadings_pca_c4_deciduous,
+#             aes(x = label_x, y = label_y, label = trait),
+#             size = 4, fontface = "bold", parse = TRUE) +
+#   labs(x = "PC1", y = "PC2") +
+#   guides(fill = guide_colorbar(title = "Density level"))
+# 
+# # jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# # plot(global_optimal_traits_c4_deciduous_pca_plot)
+# # dev.off()
+
+
+#############################
+### run model all together ##
+#############################
+
+## combine model outputs with new category
+global_optimal_traits_c3_deciduous$pft <- 'c3_deciduous'
+global_optimal_traits_c3_evergreen$pft <- 'c3_evergreen'
+global_optimal_traits_c4_deciduous$pft <- 'c4_deciduous'
+
+global_optimal_traits_all <- rbind(global_optimal_traits_c3_deciduous, global_optimal_traits_c3_evergreen, global_optimal_traits_c4_deciduous)
+
+global_optimal_traits_all_scale <- as.data.frame(scale(select(global_optimal_traits_all, 
+                                                         lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25)))
+global_optimal_traits_all_scale$pft <- global_optimal_traits_all$pft
+global_optimal_traits_all_scale_nona <- na.omit(global_optimal_traits_all_scale)
 
 ### fit pca
-global_optimal_traits_c3_evergreen_pca <- princomp(na.omit(global_optimal_traits_c3_evergreen_scale))
-summary(global_optimal_traits_c3_evergreen_pca)
-global_optimal_traits_c3_evergreen_pca$loadings[, 1:2]
+global_optimal_traits_all_pca <- prcomp(global_optimal_traits_all_scale_nona[,1:12])
+summary(global_optimal_traits_all_pca)
+global_optimal_traits_all_pca$rotation[,1:3]
 
 ### plot results
-global_optimal_traits_c3_evergreen_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c3_evergreen_pca, 
-                                                                   col.var = "red",
-                                                                   alpha.ind = 0.01,
-                                                                   geom = c("point"))
+arrow_scale_all <- 5 # Scale factor for arrows and labels to extend from origin
+label_scale_all <- 5.5
 
-# jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_lineplot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_c3_evergreen_pca_lineplot)
+loadings_pca_all <- as.data.frame(global_optimal_traits_all_pca$rotation[, 1:3]) 
+loadings_pca_all$trait <- rownames(loadings_pca_all) ## ad trait column
+loadings_pca_all$label_x <- with(loadings_pca_all, PC1 * label_scale_all)
+loadings_pca_all$label_y <- with(loadings_pca_all, PC2 * label_scale_all)
+
+pca_scores_all <- as.data.frame(global_optimal_traits_all_pca$x) # get scores
+pca_scores_all$pft <- global_optimal_traits_all_scale_nona$pft
+
+global_optimal_traits_all_pca_plot <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
+  geom_segment(data = loadings_pca_all,
+               aes(x = 0, y = 0, xend = PC1 * arrow_scale_all, yend = PC2 * arrow_scale_all, group = NULL, color = NULL),
+               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+  geom_text(data = loadings_pca_all,
+            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
+            size = 4, fontface = "bold", parse = TRUE) +
+  labs(x = "PC1", y = "PC2") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+# jpeg('results/plots/global_optimal_traits_all_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_pca_plot)
 # dev.off()
 
-## run model for c4 deciduous plants
-global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
-                                                         deciduous = 'yes',
-                                                         tg_c = global_data_veg$tmp, 
-                                                         vpdo = global_data_veg$vpd,
-                                                         paro = global_data_veg$par,
-                                                         z = global_data_veg$z,
-                                                         f = global_data_veg$f)
 
-## add lat/lon
-global_optimal_traits_c4_deciduous$lat <- global_data_veg$lat
-global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
 
-## pca
-### select and scale traits
-global_optimal_traits_c4_deciduous_scale <- scale(select(global_optimal_traits_c4_deciduous, 
-                                                         lma, chi, gsw, vpmax25, vcmax25, jmax25, Al, nphoto, rd25, narea, nmass, tg_c, vpd, par))
 
-### fit pca
-global_optimal_traits_c4_deciduous_pca <- princomp(na.omit(global_optimal_traits_c4_deciduous_scale))
-summary(global_optimal_traits_c4_deciduous_pca)
-global_optimal_traits_c4_deciduous_pca$loadings[, 1:2]
-
-### plot results
-global_optimal_traits_c4_deciduous_pca_lineplot <- fviz_pca_biplot(global_optimal_traits_c4_deciduous_pca, 
-                                                                   col.var = "red",
-                                                                   alpha.ind = 0.01,
-                                                                   geom = c("point"))
-
-# jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_lineplot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_c4_deciduous_pca_lineplot)
-# dev.off()
 
 ## run model for c3 deciduous plants under future environments
 global_optimal_traits_c3_deciduous_fut <- calc_optimal_vcmax(pathway = 'C3',
