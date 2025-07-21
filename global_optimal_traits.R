@@ -234,13 +234,13 @@ global_optimal_traits_c4_deciduous$pft <- 'c4_deciduous'
 
 global_optimal_traits_all <- rbind(global_optimal_traits_c3_deciduous, global_optimal_traits_c3_evergreen, global_optimal_traits_c4_deciduous)
 
-global_optimal_traits_all_scale <- as.data.frame(scale(select(global_optimal_traits_all, 
-                                                         lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25)))
-global_optimal_traits_all_scale$pft <- global_optimal_traits_all$pft
-global_optimal_traits_all_scale_nona <- na.omit(global_optimal_traits_all_scale)
+global_optimal_traits_all_select <- as.data.frame(select(subset(global_optimal_traits_all, par > 0 & vpd > 0 & tg_c > 0), 
+                                                         lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
+                                                         vpd, tg_c, par, pft))
+global_optimal_traits_all_select_nona <- na.omit(global_optimal_traits_all_select)
 
 ### fit pca
-global_optimal_traits_all_pca <- prcomp(global_optimal_traits_all_scale_nona[,1:12])
+global_optimal_traits_all_pca <- prcomp(global_optimal_traits_all_select_nona[,c(1:4,6:7)], scale = T, center = T)
 summary(global_optimal_traits_all_pca)
 global_optimal_traits_all_pca$rotation[,1:3]
 
@@ -256,7 +256,7 @@ loadings_pca_all$label_y <- with(loadings_pca_all, PC2 * label_scale_all)
 pca_scores_all <- as.data.frame(global_optimal_traits_all_pca$x) # get scores
 pca_scores_all$pft <- global_optimal_traits_all_scale_nona$pft
 
-global_optimal_traits_all_pca_plot <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
+global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
   theme(axis.title = element_text(size = 18, face = "bold"),
         axis.text = element_text(size = 14),
@@ -275,8 +275,27 @@ global_optimal_traits_all_pca_plot <- ggplot(pca_scores_all, aes(x = PC1, y = PC
   labs(x = "PC1", y = "PC2") +
   guides(fill = guide_colorbar(title = "Density level"))
 
-# jpeg('results/plots/global_optimal_traits_all_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_all_pca_plot)
+global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2, y = PC3, group = pft, color = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
+  geom_segment(data = loadings_pca_all,
+               aes(x = 0, y = 0, xend = PC1 * arrow_scale_all, yend = PC2 * arrow_scale_all, group = NULL, color = NULL),
+               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+  geom_text(data = loadings_pca_all,
+            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
+            size = 4, fontface = "bold", parse = TRUE) +
+  labs(x = "PC2", y = "PC3") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_pca_plot_PC1PC2)
 # dev.off()
 
 ################
@@ -397,13 +416,13 @@ global_optimal_traits_c4_deciduous_fut$pft <- 'c4_deciduous'
 
 global_optimal_traits_all_fut <- rbind(global_optimal_traits_c3_deciduous_fut, global_optimal_traits_c3_evergreen_fut, global_optimal_traits_c4_deciduous_fut)
 
-global_optimal_traits_all_fut_scale <- as.data.frame(scale(select(global_optimal_traits_all_fut, 
-                                                              lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25)))
-global_optimal_traits_all_fut_scale$pft <- global_optimal_traits_all_fut$pft
-global_optimal_traits_all_fut_scale_nona <- na.omit(global_optimal_traits_all_fut_scale)
+global_optimal_traits_all_fut_select <- as.data.frame(select(global_optimal_traits_all_fut, 
+                                                                  lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
+                                                                  vpd, tg_c, par, pft))
+global_optimal_traits_all_fut_select_nona <- na.omit(global_optimal_traits_all_fut_scale)
 
 ### fit pca
-global_optimal_traits_all_fut_pca <- prcomp(global_optimal_traits_all_fut_scale_nona[,1:12])
+global_optimal_traits_all_fut_pca <- prcomp(global_optimal_traits_all_fut_select_nona[,c(1:4,6:7)], scale = T, center = T)
 summary(global_optimal_traits_all_fut_pca)
 global_optimal_traits_all_fut_pca$rotation[,1:3]
 
@@ -419,7 +438,7 @@ loadings_pca_all_fut$label_y <- with(loadings_pca_all_fut, PC2 * label_scale_all
 pca_scores_all_fut <- as.data.frame(global_optimal_traits_all_fut_pca$x) # get scores
 pca_scores_all_fut$pft <- global_optimal_traits_all_fut_scale_nona$pft
 
-global_optimal_traits_all_fut_pca_plot <- ggplot(pca_scores_all_fut, aes(x = PC1, y = PC2, group = pft, color = pft)) +
+global_optimal_traits_all_fut_pca_plot_PC1PC2 <- ggplot(pca_scores_all_fut, aes(x = PC1, y = PC2, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
   theme(axis.title = element_text(size = 18, face = "bold"),
         axis.text = element_text(size = 14),
@@ -438,17 +457,28 @@ global_optimal_traits_all_fut_pca_plot <- ggplot(pca_scores_all_fut, aes(x = PC1
   labs(x = "PC1", y = "PC2") +
   guides(fill = guide_colorbar(title = "Density level"))
 
-# jpeg('results/plots/global_optimal_traits_all_fut_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_all_fut_pca_plot)
+global_optimal_traits_all_fut_pca_plot_PC2PC3 <- ggplot(pca_scores_all_fut, aes(x = PC2, y = PC3, group = pft, color = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
+  geom_segment(data = loadings_pca_all_fut,
+               aes(x = 0, y = 0, xend = PC1 * arrow_scale_all_fut, yend = PC2 * arrow_scale_all_fut, group = NULL, color = NULL),
+               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+  geom_text(data = loadings_pca_all_fut,
+            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
+            size = 4, fontface = "bold", parse = TRUE) +
+  labs(x = "PC2", y = "PC3") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+# jpeg('results/plots/global_optimal_traits_all_fut_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_fut_pca_plot_PC1PC2)
 # dev.off()
-
-
-
-
-
-
-
-
 
 
 ## create map plots for each trait for each plant type
@@ -456,50 +486,51 @@ global_optimal_traits_all_fut_pca_plot <- ggplot(pca_scores_all_fut, aes(x = PC1
 pale = colorRampPalette(c('white', rev(brewer.pal(10,'Spectral'))))
 cols = pale(28)
 
-### c3 deciduous - vcmax25, nmass, chi, lma
-#### vcmax25
-hist(global_optimal_traits_c3_deciduous$vcmax25)
-arg_c3_deciduous_vcmax25 = list(at = seq(0, 210, 10), labels = seq(0, 210, 10))
-c3_deciduous_vcmax25_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+### c3 deciduous - Anet
+#### Anet
+hist(global_optimal_traits_c3_deciduous$Anet)
+# arg_c3_deciduous_Anet = list(at = seq(0, 40, 4), labels = seq(0, 40, 4))
+c3_deciduous_Anet_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                  global_optimal_traits_c3_deciduous$lat,
-                                                 global_optimal_traits_c3_deciduous$vcmax25))
-plot(c3_deciduous_vcmax25_raster)
-# plot(c3_deciduous_vcmax25_raster, col=cols, breaks = seq(0, 210, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+                                                 global_optimal_traits_c3_deciduous$Anet))
+plot(c3_deciduous_Anet_raster)
+# plot(c3_deciduous_Anet_raster, col=cols, breaks = seq(0, 210, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
 #      lab.breaks = seq(0, 210, 10), ylim = c(-90, 90), 
 #      legend.args=list(text=expression(italic('V'*"'")[cmax25]*' (µmol m'^'-2'*' s'^'-1'*')'), 
-#                       line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_vcmax25)
+#                       line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_Anet)
 maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
-axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
-axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
+# axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+# axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
-#### lma
-hist(global_optimal_traits_c3_deciduous$lma)
-arg_c3_deciduous_lma = list(at = seq(0, 200, 10), labels = seq(0, 200, 10))
-c3_deciduous_lma_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+#### nue
+hist(global_optimal_traits_c3_deciduous$nue)
+# arg_c3_deciduous_nue = list(at = seq(15, 40, 5), labels = seq(15, 40, 5))
+c3_deciduous_nue_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                  global_optimal_traits_c3_deciduous$lat,
-                                                 global_optimal_traits_c3_deciduous$lma))
-plot(c3_deciduous_lma_raster)
-# plot(c3_deciduous_lma_raster, col=cols, breaks = seq(0, 200, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+                                                 global_optimal_traits_c3_deciduous$nue))
+plot(c3_deciduous_nue_raster)
+# plot(c3_deciduous_nue_raster, col=cols, breaks = seq(0, 200, 10), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
 #      lab.breaks = seq(0, 200, 10), ylim = c(-90, 90), 
 #      legend.args=list(text=expression(italic('M'*"'")[area]), 
-#                       line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_lma)
+#                       line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_nue)
 maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
-axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
-axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
+# axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+# axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
-#### nmass
-hist(global_optimal_traits_c3_deciduous$nmass)
-arg_c3_deciduous_nmass = list(at = seq(0, 0.02, 0.001), labels = seq(0, 0.02, 0.001))
-c3_deciduous_nmass_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
+#### gsw
+hist(global_optimal_traits_c3_deciduous$gsw)
+# arg_c3_deciduous_gsw = list(at = seq(0, 0.02, 0.001), labels = seq(0, 0.02, 0.001))
+c3_deciduous_gsw_raster <- rasterFromXYZ(cbind(global_optimal_traits_c3_deciduous$lon,
                                                global_optimal_traits_c3_deciduous$lat,
-                                               global_optimal_traits_c3_deciduous$nmass))
-plot(c3_deciduous_nmass_raster, col=cols, breaks = seq(0, 0.02, 0.001), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
-     lab.breaks = seq(0, 0.02, 0.001), ylim = c(-90, 90), 
-     legend.args=list(text=expression(italic('M'*"'")[area]), 
-                      line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_nmass)
+                                               global_optimal_traits_c3_deciduous$gsw))
+plot(c3_deciduous_gsw_raster)
+# plot(c3_deciduous_gsw_raster, col=cols, breaks = seq(0, 0.02, 0.001), cex.axis=1.5, yaxt = 'n', xaxt = 'n', 
+#      lab.breaks = seq(0, 0.02, 0.001), ylim = c(-90, 90), 
+#      legend.args=list(text=expression(italic('M'*"'")[area]), 
+#                       line = 4, side = 4, las = 3, cex = 1.5), legend = T, xlim = c(-180, 180), axis.args = arg_c3_deciduous_gsw)
 maps::map('world',col='black',fill=F, add = T, ylim = c(-180, 180))
-axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
-axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
+# axis(2, at = seq(-90, 90, 30), labels = T, cex.axis = 1.5)
+# axis(1, at = seq(-180, 180, 90), labels = T, cex.axis = 1.5)
 
 
 
