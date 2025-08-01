@@ -254,7 +254,7 @@ loadings_pca_all$label_x <- with(loadings_pca_all, PC1 * label_scale_all)
 loadings_pca_all$label_y <- with(loadings_pca_all, PC2 * label_scale_all)
 
 pca_scores_all <- as.data.frame(global_optimal_traits_all_pca$x) # get scores
-pca_scores_all$pft <- global_optimal_traits_all_scale_nona$pft
+pca_scores_all$pft <- global_optimal_traits_all_select_nona$pft
 
 global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
@@ -272,6 +272,19 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, aes(x = PC1,
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE) +
+  labs(x = "PC1", y = "PC2") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+global_optimal_traits_all_pca_plot_PC1PC2_nolines <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
   labs(x = "PC1", y = "PC2") +
   guides(fill = guide_colorbar(title = "Density level"))
 
@@ -296,6 +309,10 @@ global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2,
 
 # jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
 # plot(global_optimal_traits_all_pca_plot_PC1PC2)
+# dev.off()
+
+# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2_nolines.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_pca_plot_PC1PC2_nolines)
 # dev.off()
 
 ################
