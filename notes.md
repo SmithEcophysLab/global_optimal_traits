@@ -28,3 +28,10 @@ interpretable PCA plots
 			- photosynthesis is in the middle (of course?)
 		- n does different things for deciduous and evergreen
 	- added c4
+
+## aug 29, 2025
+- interest from LT group about this
+- for within site analyses
+	- randomly sample from parameter distributions using mean and sd of data?
+		- cheaib beta values
+		- others?
