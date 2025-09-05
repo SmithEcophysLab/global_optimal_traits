@@ -35,3 +35,25 @@ interpretable PCA plots
 	- randomly sample from parameter distributions using mean and sd of data?
 		- cheaib beta values
 		- others?
+
+## sep 5, 2025
+- main points and corresponding figures/tables
+	1. EEO can be used to predict global distributions of optimal photosynthetic strategies
+		- figure: PCA plot
+		- analysis: explain the predicted strategy/spatial variation
+		- stage: mostly done
+	2. Traits separate between PFTs in some cases, but not others
+		- figure: trait histograms by PFT
+		- analysis: confirmation of PFT strategies across environments
+		- stage: simulations done, need to make figures
+	3. within-site variability can be predicted through simulating variability in costs
+		- figure: PCA with points darkened by within site SD
+		- analysis: TBD, where is there the most variability?
+		- stage: simulations needed
+	4. future condition impact on strategies
+		- figures: similar plots with future temperature and CO2 conditions (overlay PCAs??)
+		- analysis: similar strategies, but maybe in different part of axis?
+		- stage: simulations still needed
+- to do: same simulations with added within site variability
+	- do this using mean and SD random draw for beta distributions from Cheaib
+	- make similar PCA with mean values per site and aes assigned to site variability

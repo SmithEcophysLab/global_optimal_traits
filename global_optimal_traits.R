@@ -54,6 +54,35 @@ global_data_veg_raster <- global_data_raster * modis
 global_data_veg <- as.data.frame(rasterToPoints(global_data_veg_raster))
 colnames(global_data_veg) <- c('lon', 'lat', 'par', 'tmp', 'vpd', 'f', 'z')
 
+## read isotope values, calculate beta distributions
+### read isotope data
+iso_data <- read.csv('data/iso_data/iso_data.csv') # from cheaib et al. (2025; file = data_clean_beta.csv)
+head(iso_data)
+
+### separate into c3 and c4
+iso_data_c3 <- subset(iso_data, PS_pathway == 'C3')
+iso_data_c4 <- subset(iso_data, PS_pathway == 'C4')
+nrow(iso_data_c3)
+nrow(iso_data_c4)
+
+### calculate beta for c3 and c4
+iso_data_c3$gammastar_pa <- calc_gammastar_pa(temp = iso_data_c3$tmp, z = iso_data_c3$z)
+iso_data_c3$km_pa <- calc_km_pa(temp = iso_data_c3$tmp, z = iso_data_c3$z)
+iso_data_c3$nstar <- calc_nstar(temp = iso_data_c3$tmp, z = iso_data_c3$z)
+iso_data_c3$vpd_kpa <- calc_vpd(temp = iso_data_c3$tmp, z = iso_data_c3$z, vpdo = iso_data_c3$vpd)
+iso_data_c3$ca <- iso_data_c3$CO2 * 1e-6 * calc_patm(iso_data_c3$z)
+iso_data_c3$a_frac <- 4.4
+iso_data_c3$b_frac <- 28
+iso_data_c3$f_frac <- 12
+iso_data_c3$chi <- (iso_data_c3$big_D13 - iso_data_c3$a_frac + (iso_data_c3$f_frac * (iso_data_c3$gammastar_pa/iso_data_c3$ca)))/
+  (iso_data_c3$b_frac - iso_data_c3$a_frac)
+# hist(iso_data_c3$chi)
+iso_data_c3$beta <- 1.6 * iso_data_c3$nstar * iso_data_c3$vpd_kpa * 1000 *
+  (((iso_data_c3$chi - (iso_data_c3$gammastar_pa/iso_data_c3$ca))^2)/
+                                                 (((1- iso_data_c3$chi)^2) * (iso_data_c3$km_pa + iso_data_c3$gammastar_pa)))
+hist(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta)
+hist(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
+
 ## run model for c3 deciduous plants
 global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
                                                          deciduous = 'yes',
