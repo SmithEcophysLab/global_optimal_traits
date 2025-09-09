@@ -56,4 +56,5 @@ interpretable PCA plots
 		- stage: simulations still needed
 - to do: same simulations with added within site variability
 	- do this using mean and SD random draw for beta distributions from Cheaib
-	- make similar PCA with mean values per site and aes assigned to site variability
+		- for a select few sites: neon sites?
+	

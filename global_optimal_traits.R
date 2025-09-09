@@ -109,6 +109,44 @@ beta_c3_sd <- sd(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
 beta_c4_mean <- mean(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
 beta_c4_sd <- sd(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
 
+## read in and clean neon data
+### read data
+neon_data <- read.csv('data/neon/neon_core_terrestrial_metadata.csv')
+
+### calculate nearest latitude
+latitude_values <- global_data_veg$lat
+neon_closest_lat <- c()
+for(i in 1:length(neon_data$latitude)){
+  
+  temp_lat <- neon_data$latitude[i]
+  closest_lat_position <- which(abs(latitude_values - temp_lat) == min(abs(latitude_values - temp_lat)))[1]
+  closest_lat <- latitude_values[closest_lat_position]
+  neon_closest_lat <- c(neon_closest_lat, closest_lat)
+  
+}
+neon_data$closest_latitude <- neon_closest_lat
+
+### calculone nearest longitude
+longitude_values <- global_data_veg$lon
+neon_closest_lon <- c()
+for(i in 1:length(neon_data$longitude)){
+  
+  temp_lon <- neon_data$longitude[i]
+  closest_lon_position <- which(abs(longitude_values - temp_lon) == min(abs(longitude_values - temp_lon)))[1]
+  closest_lon <- longitude_values[closest_lon_position]
+  neon_closest_lon <- c(neon_closest_lon, closest_lon)
+  
+}
+neon_data$closest_longitude <- neon_closest_lon
+
+### add climate to neon dataset
+neon_data_clim <- left_join(neon_data, global_data_veg, by = c('closest_latitude' = 'lat', 'closest_longitude' = 'lon'))
+
+
+#############################
+### Run various models ##
+#############################
+
 ## run model for c3 deciduous plants
 global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
                                                          deciduous = 'yes',
@@ -277,9 +315,35 @@ global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
 # # plot(global_optimal_traits_c4_deciduous_pca_plot)
 # # dev.off()
 
+## run model for neon sites with varying beta values
+### bona
+global_optimal_traits_bona <- c()
+beta_bona <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_bona)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[1], 
+                                       vpdo = neon_data_clim$vpd[1],
+                                       paro = neon_data_clim$par[1],
+                                       z = neon_data_clim$z[1],
+                                       f = neon_data_clim$f[1],
+                                       beta = beta_bona[i])
+  
+  global_optimal_traits_bona <- c(global_optimal_traits_bona, optimal_traits) # NEED TO FIX OUTPUT
+  
+}
+
+global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
+                                                           deciduous = 'yes',
+                                                           tg_c = global_data_veg$tmp, 
+                                                           vpdo = global_data_veg$vpd,
+                                                           paro = global_data_veg$par,
+                                                           z = global_data_veg$z,
+                                                           f = global_data_veg$f)
 
 #############################
-### run model all together ##
+### PCA all together ##
 #############################
 
 ## combine model outputs with new category
