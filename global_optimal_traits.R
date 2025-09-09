@@ -316,8 +316,11 @@ global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
 # # dev.off()
 
 ## run model for neon sites with varying beta values
+cbind(neon_data_clim$site_id, neon_data_clim$dominant_nlcd_classes)
+# c4 sites = CPER, KONZ
+
 ### bona
-global_optimal_traits_bona <- c()
+global_optimal_traits_bona <- data.frame()
 beta_bona <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
 for(i in 1:length(beta_bona)){
   
@@ -330,17 +333,32 @@ for(i in 1:length(beta_bona)){
                                        f = neon_data_clim$f[1],
                                        beta = beta_bona[i])
   
-  global_optimal_traits_bona <- c(global_optimal_traits_bona, optimal_traits) # NEED TO FIX OUTPUT
+  global_optimal_traits_bona <- rbind(global_optimal_traits_bona, optimal_traits)
   
 }
 
-global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
-                                                           deciduous = 'yes',
-                                                           tg_c = global_data_veg$tmp, 
-                                                           vpdo = global_data_veg$vpd,
-                                                           paro = global_data_veg$par,
-                                                           z = global_data_veg$z,
-                                                           f = global_data_veg$f)
+### clbj
+global_optimal_traits_clbj <- data.frame()
+beta_clbj <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_clbj)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[2], 
+                                       vpdo = neon_data_clim$vpd[2],
+                                       paro = neon_data_clim$par[2],
+                                       z = neon_data_clim$z[2],
+                                       f = neon_data_clim$f[2],
+                                       beta = beta_clbj[i])
+  
+  global_optimal_traits_clbj <- rbind(global_optimal_traits_clbj, optimal_traits)
+  
+}
+
+#######
+## need to finish out rest of sites
+#######
+
 
 #############################
 ### PCA all together ##
