@@ -65,7 +65,7 @@ iso_data_c4 <- subset(iso_data, PS_pathway == 'C4')
 nrow(iso_data_c3)
 nrow(iso_data_c4)
 
-### calculate beta for c3 and c4
+### calculate beta for c3
 iso_data_c3$gammastar_pa <- calc_gammastar_pa(temp = iso_data_c3$tmp, z = iso_data_c3$z)
 iso_data_c3$km_pa <- calc_km_pa(temp = iso_data_c3$tmp, z = iso_data_c3$z)
 iso_data_c3$nstar <- calc_nstar(temp = iso_data_c3$tmp, z = iso_data_c3$z)
@@ -74,7 +74,7 @@ iso_data_c3$ca <- iso_data_c3$CO2 * 1e-6 * calc_patm(iso_data_c3$z)
 iso_data_c3$a_frac <- 4.4
 iso_data_c3$b_frac <- 28
 iso_data_c3$f_frac <- 12
-iso_data_c3$chi <- (iso_data_c3$big_D13 - iso_data_c3$a_frac + (iso_data_c3$f_frac * (iso_data_c3$gammastar_pa/iso_data_c3$ca)))/
+iso_data_c3$chi <- (iso_data_c3$big_D13 - (iso_data_c3$a_frac + (iso_data_c3$f_frac * (iso_data_c3$gammastar_pa/iso_data_c3$ca))))/
   (iso_data_c3$b_frac - iso_data_c3$a_frac)
 # hist(iso_data_c3$chi)
 iso_data_c3$beta <- 1.6 * iso_data_c3$nstar * iso_data_c3$vpd_kpa * 1000 *
@@ -82,6 +82,32 @@ iso_data_c3$beta <- 1.6 * iso_data_c3$nstar * iso_data_c3$vpd_kpa * 1000 *
                                                  (((1- iso_data_c3$chi)^2) * (iso_data_c3$km_pa + iso_data_c3$gammastar_pa)))
 hist(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta)
 hist(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
+
+### calculate beta for c4
+iso_data_c4$gammastar_pa <- calc_gammastar_pa(temp = iso_data_c4$tmp, z = iso_data_c4$z)
+iso_data_c4$km_pa <- calc_km_pa(temp = iso_data_c4$tmp, z = iso_data_c4$z)
+iso_data_c4$kp_pa <- calc_kp_temp_pa(temp = iso_data_c4$tmp, z = iso_data_c4$z)
+iso_data_c4$nstar <- calc_nstar(temp = iso_data_c4$tmp, z = iso_data_c4$z)
+iso_data_c4$vpd_kpa <- calc_vpd(temp = iso_data_c4$tmp, z = iso_data_c4$z, vpdo = iso_data_c4$vpd)
+iso_data_c4$ca <- iso_data_c4$CO2 * 1e-6 * calc_patm(iso_data_c4$z)
+iso_data_c4$a_frac <- 4.4
+iso_data_c4$b_frac <- -5.7+0.2*30
+iso_data_c4$f_frac <- 12
+iso_data_c4$chi <- (iso_data_c4$big_D13 - (iso_data_c4$a_frac + (iso_data_c4$f_frac * (iso_data_c4$gammastar_pa/iso_data_c4$ca))))/
+  (iso_data_c4$b_frac - iso_data_c4$a_frac)
+# hist(iso_data_c4$chi)
+hist(subset(iso_data_c4, chi > 0)$chi)
+iso_data_c4$beta <- 1.6 * iso_data_c4$nstar * iso_data_c4$vpd_kpa * 1000 *
+  (((iso_data_c4$chi)^2)/
+     (((1- iso_data_c4$chi)^2) * (iso_data_c4$kp_pa)))
+hist(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta)
+hist(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
+
+### calculate mean and stdev beta for c3 and c4
+beta_c3_mean <- mean(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
+beta_c3_sd <- sd(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
+beta_c4_mean <- mean(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
+beta_c4_sd <- sd(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
 
 ## run model for c3 deciduous plants
 global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
