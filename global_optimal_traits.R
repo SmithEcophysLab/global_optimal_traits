@@ -196,13 +196,16 @@ cbind(neon_data_clim$site_id, neon_data_clim$dominant_nlcd_classes)
 ### harv
 global_optimal_traits_harv <- data.frame()
 beta_harv <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_harv <- rnorm(1000, neon_data_clim$tmp[5], neon_data_clim$tmp[5] * 0.1)
+vpd_harv <- rnorm(1000, neon_data_clim$vpd[5], neon_data_clim$vpd[5] * 0.1)
+par_harv <- rnorm(1000, neon_data_clim$par[5], neon_data_clim$par[5] * 0.1)
 for(i in 1:length(beta_harv)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[5], 
-                                       vpdo = neon_data_clim$vpd[5],
-                                       paro = neon_data_clim$par[5],
+                                       tg_c = tmp_harv[i], 
+                                       vpdo = vpd_harv[i],
+                                       paro = par_harv[i],
                                        z = neon_data_clim$z[5],
                                        f = neon_data_clim$f[5],
                                        beta = beta_harv[i])
@@ -218,13 +221,16 @@ global_optimal_traits_harv$lon <- neon_data_clim$closest_longitude[5]
 ### ornl
 global_optimal_traits_ornl <- data.frame()
 beta_ornl <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_ornl <- rnorm(1000, neon_data_clim$tmp[9], neon_data_clim$tmp[9] * 0.1)
+vpd_ornl <- rnorm(1000, neon_data_clim$vpd[9], neon_data_clim$vpd[9] * 0.1)
+par_ornl <- rnorm(1000, neon_data_clim$par[9], neon_data_clim$par[9] * 0.1)
 for(i in 1:length(beta_ornl)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[9], 
-                                       vpdo = neon_data_clim$vpd[9],
-                                       paro = neon_data_clim$par[9],
+                                       tg_c = tmp_ornl[i], 
+                                       vpdo = vpd_ornl[i],
+                                       paro = par_ornl[i],
                                        z = neon_data_clim$z[9],
                                        f = neon_data_clim$f[9],
                                        beta = beta_ornl[i])
@@ -240,13 +246,16 @@ global_optimal_traits_ornl$lon <- neon_data_clim$closest_longitude[9]
 ### scbi
 global_optimal_traits_scbi <- data.frame()
 beta_scbi <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_scbi <- rnorm(1000, neon_data_clim$tmp[12], neon_data_clim$tmp[12] * 0.1)
+vpd_scbi <- rnorm(1000, neon_data_clim$vpd[12], neon_data_clim$vpd[12] * 0.1)
+par_scbi <- rnorm(1000, neon_data_clim$par[12], neon_data_clim$par[12] * 0.1)
 for(i in 1:length(beta_scbi)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[12], 
-                                       vpdo = neon_data_clim$vpd[12],
-                                       paro = neon_data_clim$par[12],
+                                       tg_c = tmp_scbi[i], 
+                                       vpdo = vpd_scbi[i],
+                                       paro = par_scbi[i],
                                        z = neon_data_clim$z[12],
                                        f = neon_data_clim$f[12],
                                        beta = beta_scbi[i])
@@ -262,13 +271,16 @@ global_optimal_traits_scbi$lon <- neon_data_clim$closest_longitude[12]
 ### tall
 global_optimal_traits_tall <- data.frame()
 beta_tall <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_tall <- rnorm(1000, neon_data_clim$tmp[15], neon_data_clim$tmp[15] * 0.1)
+vpd_tall <- rnorm(1000, neon_data_clim$vpd[15], neon_data_clim$vpd[15] * 0.1)
+par_tall <- rnorm(1000, neon_data_clim$par[15], neon_data_clim$par[15] * 0.1)
 for(i in 1:length(beta_tall)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[15], 
-                                       vpdo = neon_data_clim$vpd[15],
-                                       paro = neon_data_clim$par[15],
+                                       tg_c = tmp_tall[i], 
+                                       vpdo = vpd_tall[i],
+                                       paro = par_tall[i],
                                        z = neon_data_clim$z[15],
                                        f = neon_data_clim$f[15],
                                        beta = beta_tall[i])
@@ -284,13 +296,16 @@ global_optimal_traits_tall$lon <- neon_data_clim$closest_longitude[15]
 ### unde
 global_optimal_traits_unde <- data.frame()
 beta_unde <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_unde <- rnorm(1000, neon_data_clim$tmp[17], neon_data_clim$tmp[17] * 0.1)
+vpd_unde <- rnorm(1000, neon_data_clim$vpd[17], neon_data_clim$vpd[17] * 0.1)
+par_unde <- rnorm(1000, neon_data_clim$par[17], neon_data_clim$par[17] * 0.1)
 for(i in 1:length(beta_unde)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[17], 
-                                       vpdo = neon_data_clim$vpd[17],
-                                       paro = neon_data_clim$par[17],
+                                       tg_c = tmp_unde[i], 
+                                       vpdo = vpd_unde[i],
+                                       paro = par_unde[i],
                                        z = neon_data_clim$z[17],
                                        f = neon_data_clim$f[17],
                                        beta = beta_unde[i])
@@ -306,13 +321,16 @@ global_optimal_traits_unde$lon <- neon_data_clim$closest_longitude[17]
 ### cper
 global_optimal_traits_cper <- data.frame()
 beta_cper <- exp(rnorm(1000, beta_c4_mean, beta_c4_sd))
+tmp_cper <- rnorm(1000, neon_data_clim$tmp[3], neon_data_clim$tmp[3] * 0.1)
+vpd_cper <- rnorm(1000, neon_data_clim$vpd[3], neon_data_clim$vpd[3] * 0.1)
+par_cper <- rnorm(1000, neon_data_clim$par[3], neon_data_clim$par[3] * 0.1)
 for(i in 1:length(beta_cper)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C4',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[3], 
-                                       vpdo = neon_data_clim$vpd[3],
-                                       paro = neon_data_clim$par[3],
+                                       tg_c = tmp_cper[i], 
+                                       vpdo = vpd_cper[i],
+                                       paro = par_cper[i],
                                        z = neon_data_clim$z[3],
                                        f = neon_data_clim$f[3],
                                        beta = beta_cper[i])
@@ -328,13 +346,16 @@ global_optimal_traits_cper$lon <- neon_data_clim$closest_longitude[3]
 ### konz
 global_optimal_traits_konz <- data.frame()
 beta_konz <- exp(rnorm(1000, beta_c4_mean, beta_c4_sd))
+tmp_konz <- rnorm(1000, neon_data_clim$tmp[6], neon_data_clim$tmp[6] * 0.1)
+vpd_konz <- rnorm(1000, neon_data_clim$vpd[6], neon_data_clim$vpd[6] * 0.1)
+par_konz <- rnorm(1000, neon_data_clim$par[6], neon_data_clim$par[6] * 0.1)
 for(i in 1:length(beta_konz)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C4',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[6], 
-                                       vpdo = neon_data_clim$vpd[6],
-                                       paro = neon_data_clim$par[6],
+                                       tg_c = tmp_konz[i], 
+                                       vpdo = vpd_konz[i],
+                                       paro = par_konz[i],
                                        z = neon_data_clim$z[6],
                                        f = neon_data_clim$f[6],
                                        beta = beta_konz[i])
@@ -346,6 +367,181 @@ for(i in 1:length(beta_konz)){
 ## add lat/lon
 global_optimal_traits_konz$lat <- neon_data_clim$closest_latitude[6]
 global_optimal_traits_konz$lon <- neon_data_clim$closest_longitude[6]
+
+# ### guan
+# global_optimal_traits_guan <- data.frame()
+# beta_guan <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+# tmp_guan <- rnorm(1000, neon_data_clim$tmp[4], neon_data_clim$tmp[4] * 0.1)
+# vpd_guan <- rnorm(1000, neon_data_clim$vpd[4], neon_data_clim$vpd[4] * 0.1)
+# par_guan <- rnorm(1000, neon_data_clim$par[4], neon_data_clim$par[4] * 0.1)
+# for(i in 1:length(beta_guan)){
+#   
+#   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+#                                        deciduous = 'no',
+#                                        tg_c = tmp_guan[i], 
+#                                        vpdo = vpd_guan[i],
+#                                        paro = par_guan[i],
+#                                        z = neon_data_clim$z[4],
+#                                        f = neon_data_clim$f[4],
+#                                        beta = beta_guan[i])
+#   
+#   global_optimal_traits_guan <- rbind(global_optimal_traits_guan, optimal_traits)
+#   
+# }
+# 
+# ## add lat/lon
+# global_optimal_traits_guan$lat <- neon_data_clim$closest_latitude[4]
+# global_optimal_traits_guan$lon <- neon_data_clim$closest_longitude[4]
+
+### niwo
+# global_optimal_traits_niwo <- data.frame()
+# beta_niwo <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+# tmp_niwo <- rnorm(1000, neon_data_clim$tmp[7], neon_data_clim$tmp[7] * 0.1)
+# vpd_niwo <- rnorm(1000, neon_data_clim$vpd[7], neon_data_clim$vpd[7] * 0.1)
+# par_niwo <- rnorm(1000, neon_data_clim$par[7], neon_data_clim$par[7] * 0.1)
+# for(i in 1:length(beta_niwo)){
+#   
+#   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+#                                        deciduous = 'no',
+#                                        tg_c = tmp_niwo[i], 
+#                                        vpdo = vpd_niwo[i],
+#                                        paro = par_niwo[i],
+#                                        z = neon_data_clim$z[7],
+#                                        f = neon_data_clim$f[7],
+#                                        beta = beta_niwo[i])
+#   
+#   global_optimal_traits_niwo <- rbind(global_optimal_traits_niwo, optimal_traits)
+#   
+# }
+# 
+# ## add lat/lon
+# global_optimal_traits_niwo$lat <- neon_data_clim$closest_latitude[7]
+# global_optimal_traits_niwo$lon <- neon_data_clim$closest_longitude[7]
+
+### onaq
+global_optimal_traits_onaq <- data.frame()
+beta_onaq <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_onaq <- rnorm(1000, neon_data_clim$tmp[8], neon_data_clim$tmp[8] * 0.1)
+vpd_onaq <- rnorm(1000, neon_data_clim$vpd[8], neon_data_clim$vpd[8] * 0.1)
+par_onaq <- rnorm(1000, neon_data_clim$par[8], neon_data_clim$par[8] * 0.1)
+for(i in 1:length(beta_onaq)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'no',
+                                       tg_c = tmp_onaq[i], 
+                                       vpdo = vpd_onaq[i],
+                                       paro = par_onaq[i],
+                                       z = neon_data_clim$z[8],
+                                       f = neon_data_clim$f[8],
+                                       beta = beta_onaq[i])
+  
+  global_optimal_traits_onaq <- rbind(global_optimal_traits_onaq, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_onaq$lat <- neon_data_clim$closest_latitude[8]
+global_optimal_traits_onaq$lon <- neon_data_clim$closest_longitude[8]
+
+### puum
+global_optimal_traits_puum <- data.frame()
+beta_puum <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_puum <- rnorm(1000, neon_data_clim$tmp[11], neon_data_clim$tmp[11] * 0.1)
+vpd_puum <- rnorm(1000, neon_data_clim$vpd[11], neon_data_clim$vpd[11] * 0.1)
+par_puum <- rnorm(1000, neon_data_clim$par[11], neon_data_clim$par[11] * 0.1)
+for(i in 1:length(beta_puum)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'no',
+                                       tg_c = tmp_puum[i], 
+                                       vpdo = vpd_puum[i],
+                                       paro = par_puum[i],
+                                       z = neon_data_clim$z[11],
+                                       f = neon_data_clim$f[11],
+                                       beta = beta_puum[i])
+  
+  global_optimal_traits_puum <- rbind(global_optimal_traits_puum, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_puum$lat <- neon_data_clim$closest_latitude[11]
+global_optimal_traits_puum$lon <- neon_data_clim$closest_longitude[11]
+
+### sjer
+global_optimal_traits_sjer <- data.frame()
+beta_sjer <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+tmp_sjer <- rnorm(1000, neon_data_clim$tmp[13], neon_data_clim$tmp[13] * 0.1)
+vpd_sjer <- rnorm(1000, neon_data_clim$vpd[13], neon_data_clim$vpd[13] * 0.1)
+par_sjer <- rnorm(1000, neon_data_clim$par[13], neon_data_clim$par[13] * 0.1)
+for(i in 1:length(beta_sjer)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'no',
+                                       tg_c = tmp_sjer[i], 
+                                       vpdo = vpd_sjer[i],
+                                       paro = par_sjer[i],
+                                       z = neon_data_clim$z[13],
+                                       f = neon_data_clim$f[13],
+                                       beta = beta_sjer[i])
+  
+  global_optimal_traits_sjer <- rbind(global_optimal_traits_sjer, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_sjer$lat <- neon_data_clim$closest_latitude[13]
+global_optimal_traits_sjer$lon <- neon_data_clim$closest_longitude[13]
+
+# ### wref
+# global_optimal_traits_wref <- data.frame()
+# beta_wref <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+# tmp_wref <- rnorm(1000, neon_data_clim$tmp[19], neon_data_clim$tmp[19] * 0.1)
+# vpd_wref <- rnorm(1000, neon_data_clim$vpd[19], neon_data_clim$vpd[19] * 0.1)
+# par_wref <- rnorm(1000, neon_data_clim$par[19], neon_data_clim$par[19] * 0.1)
+# for(i in 1:length(beta_wref)){
+#   
+#   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+#                                        deciduous = 'no',
+#                                        tg_c = tmp_wref[i], 
+#                                        vpdo = vpd_wref[i],
+#                                        paro = par_wref[i],
+#                                        z = neon_data_clim$z[19],
+#                                        f = neon_data_clim$f[19],
+#                                        beta = beta_wref[i])
+#   
+#   global_optimal_traits_wref <- rbind(global_optimal_traits_wref, optimal_traits)
+#   
+# }
+# 
+# ## add lat/lon
+# global_optimal_traits_wref$lat <- neon_data_clim$closest_latitude[19]
+# global_optimal_traits_wref$lon <- neon_data_clim$closest_longitude[19]
+# 
+# ### yell
+# global_optimal_traits_yell <- data.frame()
+# beta_yell <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+# tmp_yell <- rnorm(1000, neon_data_clim$tmp[20], neon_data_clim$tmp[20] * 0.1)
+# vpd_yell <- rnorm(1000, neon_data_clim$vpd[20], neon_data_clim$vpd[20] * 0.1)
+# par_yell <- rnorm(1000, neon_data_clim$par[20], neon_data_clim$par[20] * 0.1)
+# for(i in 1:length(beta_yell)){
+#   
+#   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+#                                        deciduous = 'no',
+#                                        tg_c = tmp_yell[i], 
+#                                        vpdo = vpd_yell[i],
+#                                        paro = par_yell[i],
+#                                        z = neon_data_clim$z[20],
+#                                        f = neon_data_clim$f[20],
+#                                        beta = beta_yell[i])
+#   
+#   global_optimal_traits_yell <- rbind(global_optimal_traits_yell, optimal_traits)
+#   
+# }
+# 
+# ## add lat/lon
+# global_optimal_traits_yell$lat <- neon_data_clim$closest_latitude[20]
+# global_optimal_traits_yell$lon <- neon_data_clim$closest_longitude[20]
 
 #######
 ## need to finish out rest of sites
@@ -457,6 +653,9 @@ global_optimal_traits_unde$site <- 'unde'
 global_optimal_traits_scbi$site <- 'scbi'
 global_optimal_traits_cper$site <- 'cper'
 global_optimal_traits_konz$site <- 'konz'
+global_optimal_traits_onaq$site <- 'onaq'
+global_optimal_traits_puum$site <- 'puum'
+global_optimal_traits_sjer$site <- 'sjer'
 
 global_optimal_traits_sites <- rbind(global_optimal_traits_harv, 
                                    global_optimal_traits_ornl,
@@ -464,7 +663,10 @@ global_optimal_traits_sites <- rbind(global_optimal_traits_harv,
                                    global_optimal_traits_tall,
                                    global_optimal_traits_unde,
                                    global_optimal_traits_cper,
-                                   global_optimal_traits_konz)
+                                   global_optimal_traits_konz,
+                                   global_optimal_traits_onaq,
+                                   global_optimal_traits_puum,
+                                   global_optimal_traits_sjer)
 
 global_optimal_traits_sites_select <- as.data.frame(select(subset(global_optimal_traits_sites, par > 0 & vpd > 0 & tg_c > 0), 
                                                          lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
