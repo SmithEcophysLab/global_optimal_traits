@@ -160,49 +160,6 @@ global_optimal_traits_c3_deciduous <- calc_optimal_vcmax(pathway = 'C3',
 global_optimal_traits_c3_deciduous$lat <- global_data_veg$lat
 global_optimal_traits_c3_deciduous$lon <- global_data_veg$lon
 
-# ## pca
-# ### select and scale traits
-# global_optimal_traits_c3_deciduous_scale <- scale(select(global_optimal_traits_c3_deciduous, 
-#                                                          lma, Anet, wue, nue, nphoto, narea, tg_c, vpd, par))
-# 
-# ### fit pca
-# global_optimal_traits_c3_deciduous_pca <- prcomp(na.omit(global_optimal_traits_c3_deciduous_scale))
-# summary(global_optimal_traits_c3_deciduous_pca)
-# global_optimal_traits_c3_deciduous_pca$rotation[,1:3]
-# 
-# ### plot results
-# arrow_scale_c3_deciduous <- 5 # Scale factor for arrows and labels to extend from origin
-# label_scale_c3_deciduous <- 5.5
-# loadings_pca_c3_deciduous <- as.data.frame(global_optimal_traits_c3_deciduous_pca$rotation[, 1:2]) 
-# loadings_pca_c3_deciduous$trait <- rownames(loadings_pca_c3_deciduous) ## ad trait column
-# pca_scores_c3_deciduous <- as.data.frame(global_optimal_traits_c3_deciduous_pca$x) # get scores
-# loadings_pca_c3_deciduous$label_x <- with(loadings_pca_c3_deciduous, PC1 * label_scale_c3_deciduous)
-# loadings_pca_c3_deciduous$label_y <- with(loadings_pca_c3_deciduous, PC2 * label_scale_c3_deciduous)
-# 
-# global_optimal_traits_c3_deciduous_pca_plot <- ggplot(pca_scores_c3_deciduous, aes(x = PC1, y = PC2)) +
-#   theme_minimal(base_size = 14) +
-#   theme(axis.title = element_text(size = 18, face = "bold"),
-#     axis.text = element_text(size = 14),
-#     axis.line = element_line(color = "black", linewidth = 0.6),
-#     panel.grid.major = element_blank(),
-#     panel.grid.minor = element_blank()) +
-#   coord_equal() +
-#   geom_point(alpha = 0.03, size = 0.5) +
-#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
-#   scale_fill_viridis_c(option = "turbo") +
-#   geom_segment(data = loadings_pca_c3_deciduous,
-#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c3_deciduous, yend = PC2 * arrow_scale_c3_deciduous),
-#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
-#   geom_text(data = loadings_pca_c3_deciduous,
-#             aes(x = label_x, y = label_y, label = trait),
-#             size = 4, fontface = "bold", parse = TRUE) +
-#   labs(x = "PC1", y = "PC2") +
-#   guides(fill = guide_colorbar(title = "Density level"))
-# 
-# # jpeg('results/plots/global_optimal_traits_c3_deciduous_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# # plot(global_optimal_traits_c3_deciduous_pca_plot)
-# # dev.off()
-
 ## run model for c3 evergreen plants
 global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
                                                          deciduous = 'no',
@@ -216,50 +173,7 @@ global_optimal_traits_c3_evergreen <- calc_optimal_vcmax(pathway = 'C3',
 global_optimal_traits_c3_evergreen$lat <- global_data_veg$lat
 global_optimal_traits_c3_evergreen$lon <- global_data_veg$lon
 
-# ## pca
-# ### select and scale traits
-# global_optimal_traits_c3_evergreen_scale <- scale(select(global_optimal_traits_c3_evergreen, 
-#                                                          lma, Anet, wue, nue, nphoto, narea, tg_c, vpd, par))
-# 
-# ### fit pca
-# global_optimal_traits_c3_evergreen_pca <- prcomp(na.omit(global_optimal_traits_c3_evergreen_scale))
-# summary(global_optimal_traits_c3_evergreen_pca)
-# global_optimal_traits_c3_evergreen_pca$rotation[,1:3]
-# 
-# ### plot results
-# arrow_scale_c3_evergreen <- 5 # Scale factor for arrows and labels to extend from origin
-# label_scale_c3_evergreen <- 5.5
-# loadings_pca_c3_evergreen <- as.data.frame(global_optimal_traits_c3_evergreen_pca$rotation[, 1:2]) 
-# loadings_pca_c3_evergreen$trait <- rownames(loadings_pca_c3_evergreen) ## ad trait column
-# pca_scores_c3_evergreen <- as.data.frame(global_optimal_traits_c3_evergreen_pca$x) # get scores
-# loadings_pca_c3_evergreen$label_x <- with(loadings_pca_c3_evergreen, PC1 * label_scale_c3_evergreen)
-# loadings_pca_c3_evergreen$label_y <- with(loadings_pca_c3_evergreen, PC2 * label_scale_c3_evergreen)
-# 
-# global_optimal_traits_c3_evergreen_pca_plot <- ggplot(pca_scores_c3_evergreen, aes(x = PC1, y = PC2)) +
-#   theme_minimal(base_size = 14) +
-#   theme(axis.title = element_text(size = 18, face = "bold"),
-#         axis.text = element_text(size = 14),
-#         axis.line = element_line(color = "black", linewidth = 0.6),
-#         panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank()) +
-#   coord_equal() +
-#   geom_point(alpha = 0.03, size = 0.5) +
-#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
-#   scale_fill_viridis_c(option = "turbo") +
-#   geom_segment(data = loadings_pca_c3_evergreen,
-#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c3_evergreen, yend = PC2 * arrow_scale_c3_evergreen),
-#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
-#   geom_text(data = loadings_pca_c3_evergreen,
-#             aes(x = label_x, y = label_y, label = trait),
-#             size = 4, fontface = "bold", parse = TRUE) +
-#   labs(x = "PC1", y = "PC2") +
-#   guides(fill = guide_colorbar(title = "Density level"))
-# 
-# # jpeg('results/plots/global_optimal_traits_c3_evergreen_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# # plot(global_optimal_traits_c3_evergreen_pca_plot)
-# # dev.off()
-# 
-# ## run model for c4 deciduous plants
+## run model for c4 deciduous plants
 global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
                                                         deciduous = 'yes',
                                                         tg_c = global_data_veg$tmp, 
@@ -272,88 +186,166 @@ global_optimal_traits_c4_deciduous <- calc_optimal_vcmax(pathway = 'C4',
 global_optimal_traits_c4_deciduous$lat <- global_data_veg$lat
 global_optimal_traits_c4_deciduous$lon <- global_data_veg$lon
 
-## pca
-### select and scale traits
-# global_optimal_traits_c4_deciduous_scale <- scale(select(global_optimal_traits_c4_deciduous, 
-#                                                         lma, chi, gsw, vpmax25, vcmax25, jmax25, Anet, wue, nue, nphoto, rd25, narea, nmass, tg_c, vpd, par))
-# 
-# ### fit pca
-# global_optimal_traits_c4_deciduous_pca <- prcomp(na.omit(global_optimal_traits_c4_deciduous_scale))
-# summary(global_optimal_traits_c4_deciduous_pca)
-# global_optimal_traits_c4_deciduous_pca$rotation[,1:3]
-# 
-# ### plot results
-# arrow_scale_c4_deciduous <- 5 # Scale factor for arrows and labels to extend from origin
-# label_scale_c4_deciduous <- 5.5
-# loadings_pca_c4_deciduous <- as.data.frame(global_optimal_traits_c4_deciduous_pca$rotation[, 1:2]) 
-# loadings_pca_c4_deciduous$trait <- rownames(loadings_pca_c4_deciduous) ## ad trait column
-# pca_scores_c4_deciduous <- as.data.frame(global_optimal_traits_c4_deciduous_pca$x) # get scores
-# loadings_pca_c4_deciduous$label_x <- with(loadings_pca_c4_deciduous, PC1 * label_scale_c4_deciduous)
-# loadings_pca_c4_deciduous$label_y <- with(loadings_pca_c4_deciduous, PC2 * label_scale_c4_deciduous)
-# 
-# global_optimal_traits_c4_deciduous_pca_plot <- ggplot(pca_scores_c4_deciduous, aes(x = PC1, y = PC2)) +
-#   theme_minimal(base_size = 14) +
-#   theme(axis.title = element_text(size = 18, face = "bold"),
-#         axis.text = element_text(size = 14),
-#         axis.line = element_line(color = "black", linewidth = 0.6),
-#         panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank()) +
-#   coord_equal() +
-#   geom_point(alpha = 0.03, size = 0.5) +
-#   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
-#   scale_fill_viridis_c(option = "turbo") +
-#   geom_segment(data = loadings_pca_c4_deciduous,
-#                aes(x = 0, y = 0, xend = PC1 * arrow_scale_c4_deciduous, yend = PC2 * arrow_scale_c4_deciduous),
-#                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
-#   geom_text(data = loadings_pca_c4_deciduous,
-#             aes(x = label_x, y = label_y, label = trait),
-#             size = 4, fontface = "bold", parse = TRUE) +
-#   labs(x = "PC1", y = "PC2") +
-#   guides(fill = guide_colorbar(title = "Density level"))
-# 
-# # jpeg('results/plots/global_optimal_traits_c4_deciduous_pca_plot.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# # plot(global_optimal_traits_c4_deciduous_pca_plot)
-# # dev.off()
-
 ## run model for neon sites with varying beta values
 cbind(neon_data_clim$site_id, neon_data_clim$dominant_nlcd_classes)
-# c4 sites = CPER, KONZ
+### representative sites
+# c3 deciduous sites = harv[5], ornl[9], scbi[12], tall[15], unde[17]
+# c4 sites = cper[3], konz[6]
+# c3 evergreen sites = guan[4], niwo[7], onaq[8], puum[11], sjer[13], wref[19], yell[20]
 
-### bona
-global_optimal_traits_bona <- data.frame()
-beta_bona <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
-for(i in 1:length(beta_bona)){
+### harv
+global_optimal_traits_harv <- data.frame()
+beta_harv <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_harv)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[1], 
-                                       vpdo = neon_data_clim$vpd[1],
-                                       paro = neon_data_clim$par[1],
-                                       z = neon_data_clim$z[1],
-                                       f = neon_data_clim$f[1],
-                                       beta = beta_bona[i])
+                                       tg_c = neon_data_clim$tmp[5], 
+                                       vpdo = neon_data_clim$vpd[5],
+                                       paro = neon_data_clim$par[5],
+                                       z = neon_data_clim$z[5],
+                                       f = neon_data_clim$f[5],
+                                       beta = beta_harv[i])
   
-  global_optimal_traits_bona <- rbind(global_optimal_traits_bona, optimal_traits)
+  global_optimal_traits_harv <- rbind(global_optimal_traits_harv, optimal_traits)
   
 }
 
-### clbj
-global_optimal_traits_clbj <- data.frame()
-beta_clbj <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
-for(i in 1:length(beta_clbj)){
+## add lat/lon
+global_optimal_traits_harv$lat <- neon_data_clim$closest_latitude[5]
+global_optimal_traits_harv$lon <- neon_data_clim$closest_longitude[5]
+
+### ornl
+global_optimal_traits_ornl <- data.frame()
+beta_ornl <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_ornl)){
   
   optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
                                        deciduous = 'yes',
-                                       tg_c = neon_data_clim$tmp[2], 
-                                       vpdo = neon_data_clim$vpd[2],
-                                       paro = neon_data_clim$par[2],
-                                       z = neon_data_clim$z[2],
-                                       f = neon_data_clim$f[2],
-                                       beta = beta_clbj[i])
+                                       tg_c = neon_data_clim$tmp[9], 
+                                       vpdo = neon_data_clim$vpd[9],
+                                       paro = neon_data_clim$par[9],
+                                       z = neon_data_clim$z[9],
+                                       f = neon_data_clim$f[9],
+                                       beta = beta_ornl[i])
   
-  global_optimal_traits_clbj <- rbind(global_optimal_traits_clbj, optimal_traits)
+  global_optimal_traits_ornl <- rbind(global_optimal_traits_ornl, optimal_traits)
   
 }
+
+## add lat/lon
+global_optimal_traits_ornl$lat <- neon_data_clim$closest_latitude[9]
+global_optimal_traits_ornl$lon <- neon_data_clim$closest_longitude[9]
+
+### scbi
+global_optimal_traits_scbi <- data.frame()
+beta_scbi <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_scbi)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[12], 
+                                       vpdo = neon_data_clim$vpd[12],
+                                       paro = neon_data_clim$par[12],
+                                       z = neon_data_clim$z[12],
+                                       f = neon_data_clim$f[12],
+                                       beta = beta_scbi[i])
+  
+  global_optimal_traits_scbi <- rbind(global_optimal_traits_scbi, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_scbi$lat <- neon_data_clim$closest_latitude[12]
+global_optimal_traits_scbi$lon <- neon_data_clim$closest_longitude[12]
+
+### tall
+global_optimal_traits_tall <- data.frame()
+beta_tall <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_tall)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[15], 
+                                       vpdo = neon_data_clim$vpd[15],
+                                       paro = neon_data_clim$par[15],
+                                       z = neon_data_clim$z[15],
+                                       f = neon_data_clim$f[15],
+                                       beta = beta_tall[i])
+  
+  global_optimal_traits_tall <- rbind(global_optimal_traits_tall, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_tall$lat <- neon_data_clim$closest_latitude[15]
+global_optimal_traits_tall$lon <- neon_data_clim$closest_longitude[15]
+
+### unde
+global_optimal_traits_unde <- data.frame()
+beta_unde <- exp(rnorm(1000, beta_c3_mean, beta_c3_sd))
+for(i in 1:length(beta_unde)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C3',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[17], 
+                                       vpdo = neon_data_clim$vpd[17],
+                                       paro = neon_data_clim$par[17],
+                                       z = neon_data_clim$z[17],
+                                       f = neon_data_clim$f[17],
+                                       beta = beta_unde[i])
+  
+  global_optimal_traits_unde <- rbind(global_optimal_traits_unde, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_unde$lat <- neon_data_clim$closest_latitude[17]
+global_optimal_traits_unde$lon <- neon_data_clim$closest_longitude[17]
+
+### cper
+global_optimal_traits_cper <- data.frame()
+beta_cper <- exp(rnorm(1000, beta_c4_mean, beta_c4_sd))
+for(i in 1:length(beta_cper)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C4',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[3], 
+                                       vpdo = neon_data_clim$vpd[3],
+                                       paro = neon_data_clim$par[3],
+                                       z = neon_data_clim$z[3],
+                                       f = neon_data_clim$f[3],
+                                       beta = beta_cper[i])
+  
+  global_optimal_traits_cper <- rbind(global_optimal_traits_cper, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_cper$lat <- neon_data_clim$closest_latitude[3]
+global_optimal_traits_cper$lon <- neon_data_clim$closest_longitude[3]
+
+### konz
+global_optimal_traits_konz <- data.frame()
+beta_konz <- exp(rnorm(1000, beta_c4_mean, beta_c4_sd))
+for(i in 1:length(beta_konz)){
+  
+  optimal_traits <- calc_optimal_vcmax(pathway = 'C4',
+                                       deciduous = 'yes',
+                                       tg_c = neon_data_clim$tmp[6], 
+                                       vpdo = neon_data_clim$vpd[6],
+                                       paro = neon_data_clim$par[6],
+                                       z = neon_data_clim$z[6],
+                                       f = neon_data_clim$f[6],
+                                       beta = beta_konz[i])
+  
+  global_optimal_traits_konz <- rbind(global_optimal_traits_konz, optimal_traits)
+  
+}
+
+## add lat/lon
+global_optimal_traits_konz$lat <- neon_data_clim$closest_latitude[6]
+global_optimal_traits_konz$lon <- neon_data_clim$closest_longitude[6]
 
 #######
 ## need to finish out rest of sites
@@ -364,12 +356,15 @@ for(i in 1:length(beta_clbj)){
 ### PCA all together ##
 #############################
 
-## combine model outputs with new category
+##global pft plots
+### combine model outputs with new category
 global_optimal_traits_c3_deciduous$pft <- 'c3_deciduous'
 global_optimal_traits_c3_evergreen$pft <- 'c3_evergreen'
 global_optimal_traits_c4_deciduous$pft <- 'c4_deciduous'
 
-global_optimal_traits_all <- rbind(global_optimal_traits_c3_deciduous, global_optimal_traits_c3_evergreen, global_optimal_traits_c4_deciduous)
+global_optimal_traits_all <- rbind(global_optimal_traits_c3_deciduous, 
+                                   global_optimal_traits_c3_evergreen, 
+                                   global_optimal_traits_c4_deciduous)
 
 global_optimal_traits_all_select <- as.data.frame(select(subset(global_optimal_traits_all, par > 0 & vpd > 0 & tg_c > 0), 
                                                          lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
@@ -393,7 +388,8 @@ loadings_pca_all$label_y <- with(loadings_pca_all, PC2 * label_scale_all)
 pca_scores_all <- as.data.frame(global_optimal_traits_all_pca$x) # get scores
 pca_scores_all$pft <- global_optimal_traits_all_select_nona$pft
 
-global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, aes(x = PC1, y = PC2, group = pft, color = pft)) +
+global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, 
+                                                    aes(x = PC1, y = PC2, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
   theme(axis.title = element_text(size = 18, face = "bold"),
         axis.text = element_text(size = 14),
@@ -401,14 +397,14 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, aes(x = PC1,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.5, size = 0.5) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.5) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_all,
                aes(x = 0, y = 0, xend = PC1 * arrow_scale_all, yend = PC2 * arrow_scale_all, group = NULL, color = NULL),
                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
-            size = 4, fontface = "bold", parse = TRUE) +
+            size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
   labs(x = "PC1", y = "PC2") +
   guides(fill = guide_colorbar(title = "Density level"))
 
@@ -440,7 +436,7 @@ global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2,
                arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
-            size = 4, fontface = "bold", parse = TRUE) +
+            size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
   labs(x = "PC2", y = "PC3") +
   guides(fill = guide_colorbar(title = "Density level"))
 
@@ -450,6 +446,106 @@ global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2,
 
 # jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2_nolines.jpeg', width = 10, height = 10, units = 'in', res = 600)
 # plot(global_optimal_traits_all_pca_plot_PC1PC2_nolines)
+# dev.off()
+
+##site plots
+### combine model outputs with new category
+global_optimal_traits_harv$site <- 'harv'
+global_optimal_traits_ornl$site <- 'ornl'
+global_optimal_traits_tall$site <- 'tall'
+global_optimal_traits_unde$site <- 'unde'
+global_optimal_traits_scbi$site <- 'scbi'
+global_optimal_traits_cper$site <- 'cper'
+global_optimal_traits_konz$site <- 'konz'
+
+global_optimal_traits_sites <- rbind(global_optimal_traits_harv, 
+                                   global_optimal_traits_ornl,
+                                   global_optimal_traits_scbi,
+                                   global_optimal_traits_tall,
+                                   global_optimal_traits_unde,
+                                   global_optimal_traits_cper,
+                                   global_optimal_traits_konz)
+
+global_optimal_traits_sites_select <- as.data.frame(select(subset(global_optimal_traits_sites, par > 0 & vpd > 0 & tg_c > 0), 
+                                                         lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
+                                                         vpd, tg_c, par, site))
+global_optimal_traits_sites_select_nona <- na.omit(global_optimal_traits_sites_select)
+
+### fit pca
+global_optimal_traits_sites_pca <- prcomp(global_optimal_traits_sites_select_nona[,c(1:4,6:7)], scale = T, center = T)
+summary(global_optimal_traits_sites_pca)
+global_optimal_traits_sites_pca$rotation[,1:3]
+
+### plot results
+arrow_scale_sites <- 5 # Scale factor for arrows and labels to extend from origin
+label_scale_sites <- 5.5
+
+loadings_pca_sites <- as.data.frame(global_optimal_traits_sites_pca$rotation[, 1:3]) 
+loadings_pca_sites$trait <- rownames(loadings_pca_sites) ## ad trait column
+loadings_pca_sites$label_x <- with(loadings_pca_sites, PC1 * label_scale_sites)
+loadings_pca_sites$label_y <- with(loadings_pca_sites, PC2 * label_scale_sites)
+
+pca_scores_sites <- as.data.frame(global_optimal_traits_sites_pca$x) # get scores
+pca_scores_sites$site <- global_optimal_traits_sites_select_nona$site
+
+global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites, 
+                                                    aes(x = PC1, y = PC2, group = site, color = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.1) +
+  scale_fill_viridis_c(option = "turbo") +
+  geom_segment(data = loadings_pca_sites,
+               aes(x = 0, y = 0, xend = PC1 * arrow_scale_sites, yend = PC2 * arrow_scale_sites, group = NULL, color = NULL),
+               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+  geom_text(data = loadings_pca_sites,
+            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
+            size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
+  labs(x = "PC1", y = "PC2") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+global_optimal_traits_sites_pca_plot_PC1PC2_nolines <- ggplot(pca_scores_sites, aes(x = PC1, y = PC2, group = site, color = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
+  labs(x = "PC1", y = "PC2") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+global_optimal_traits_sites_pca_plot_PC2PC3 <- ggplot(pca_scores_sites, aes(x = PC2, y = PC3, group = site, color = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18, face = "bold"),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_point(alpha = 0.5, size = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  scale_fill_viridis_c(option = "turbo") +
+  geom_segment(data = loadings_pca_sites,
+               aes(x = 0, y = 0, xend = PC1 * arrow_scale_sites, yend = PC2 * arrow_scale_sites, group = NULL, color = NULL),
+               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
+  geom_text(data = loadings_pca_sites,
+            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
+            size = 4, fontface = "bold", parse = TRUE) +
+  labs(x = "PC2", y = "PC3") +
+  guides(fill = guide_colorbar(title = "Density level"))
+
+# jpeg('results/plots/global_optimal_traits_sites_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_sites_pca_plot_PC1PC2)
+# dev.off()
+
+# jpeg('results/plots/global_optimal_traits_sites_pca_plot_PC1PC2_nolines.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_sites_pca_plot_PC1PC2_nolines)
 # dev.off()
 
 ################
