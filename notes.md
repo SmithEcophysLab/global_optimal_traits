@@ -46,8 +46,12 @@ interpretable PCA plots
 		- figure: trait histograms by PFT
 		- analysis: confirmation of PFT strategies across environments
 		- stage: simulations done, need to make figures
-	3. within-site variability can be predicted through simulating variability in costs
-		- figure: PCA with points darkened by within site SD
+	3. within-site variability can be predicted through simulating variability in costs and environment
+		- figure: PCA for a select number of NEON sites representing:
+			- c4 grassland
+			- temp deciduous
+			- temp evergreem
+			- temp mixed
 		- analysis: TBD, where is there the most variability?
 		- stage: simulations needed
 	4. future condition impact on strategies
