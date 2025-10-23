@@ -526,7 +526,8 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.1, size = 0.5) +
-  scale_color_manual(values = c("lightgreen", "darkgreen", "brown")) +
+  scale_color_manual(values = c("lightgreen", "darkgreen", "brown"),
+                     labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_all,
@@ -535,7 +536,7 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all,
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC1 (51%)", y = "PC2 (28%)") +
+  labs(x = "PC1 (51%)", y = "PC2 (28%)", color = '') +
   guides(fill = guide_colorbar(title = "Density level"))
 
 global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1, y = PC3, group = pft, color = pft)) +
@@ -546,7 +547,8 @@ global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.1, size = 0.5) +
-  scale_color_manual(values = c("lightgreen", "darkgreen", "brown")) +
+  scale_color_manual(values = c("lightgreen", "darkgreen", "brown"),
+                     labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_all,
@@ -555,7 +557,7 @@ global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1,
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC1 (51%)", y = "PC3 (16%)") +
+  labs(x = "PC1 (51%)", y = "PC3 (16%)", color = '') +
   guides(fill = guide_colorbar(title = "Density level"))
 
 jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
@@ -656,7 +658,7 @@ global_optimal_traits_all_hist_lma <- ggplot(data = global_optimal_traits_all_se
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
   scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
-                    labels = c(expression('C'[3] * 'deciduous'), expression('C'[3] * 'evergreen'), expression('C'[4] * 'deciduous'))) +
+                    labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   labs(x = expression('LMA' * ' (g m'^'-2'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_nue <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -669,53 +671,58 @@ global_optimal_traits_all_hist_nue <- ggplot(data = global_optimal_traits_all_se
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
   scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
-                    labels = c(expression('C'[3] * 'deciduous'), expression('C'[3] * 'evergreen'), expression('C'[4] * 'deciduous'))) +
+                    labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   labs(x = expression('NUE' * ' (µmol gN'^'-1' * ' s'^'-1' * ')'), y = 'Density', fill = '')
 
 jpeg(filename = "results/plots/global_optimal_traits_hist_all.jpeg", 
      width = 26, height = 14, units = 'in', res = 600)
 multiplot(global_optimal_traits_all_hist_Anet,
-          global_optimal_traits_all_hist_lma,
+          global_optimal_traits_all_hist_chi,
           global_optimal_traits_all_hist_gsw,
           global_optimal_traits_all_hist_wue,
           global_optimal_traits_all_hist_nphoto,
           global_optimal_traits_all_hist_nue,
           global_optimal_traits_all_hist_rd25,
+          global_optimal_traits_all_hist_lma,
           cols = 4)
 dev.off()
 
+#############################
+### site-level PCA ##
+#############################
 
 ##site plots
 ### combine model outputs with new category
-global_optimal_traits_harv$site <- 'harv'
-global_optimal_traits_ornl$site <- 'ornl'
-global_optimal_traits_tall$site <- 'tall'
-global_optimal_traits_unde$site <- 'unde'
-global_optimal_traits_scbi$site <- 'scbi'
 global_optimal_traits_cper$site <- 'cper'
 global_optimal_traits_konz$site <- 'konz'
-global_optimal_traits_onaq$site <- 'onaq'
+global_optimal_traits_scbi$site <- 'scbi'
+global_optimal_traits_unde$site <- 'unde'
 global_optimal_traits_puum$site <- 'puum'
 global_optimal_traits_sjer$site <- 'sjer'
+global_optimal_traits_harv_deciduous$site <- 'harv'
+global_optimal_traits_harv_evergreen$site <- 'harv'
+global_optimal_traits_tall_deciduous$site <- 'tall'
+global_optimal_traits_tall_evergreen$site <- 'tall'
 
-global_optimal_traits_sites <- rbind(global_optimal_traits_harv, 
-                                   global_optimal_traits_ornl,
+
+global_optimal_traits_sites <- rbind(global_optimal_traits_cper, 
+                                     global_optimal_traits_konz,
                                    global_optimal_traits_scbi,
-                                   global_optimal_traits_tall,
                                    global_optimal_traits_unde,
-                                   global_optimal_traits_cper,
-                                   global_optimal_traits_konz,
-                                   global_optimal_traits_onaq,
+                                   global_optimal_traits_unde,
                                    global_optimal_traits_puum,
-                                   global_optimal_traits_sjer)
+                                   global_optimal_traits_sjer,
+                                   global_optimal_traits_harv_deciduous,
+                                   global_optimal_traits_harv_evergreen,
+                                   global_optimal_traits_tall_deciduous,
+                                   global_optimal_traits_tall_evergreen)
 
 global_optimal_traits_sites_select <- as.data.frame(select(subset(global_optimal_traits_sites, par > 0 & vpd > 0 & tg_c > 0), 
-                                                         lma, Anet, wue, gsw, chi, nue, nphoto, narea, nmass, vcmax25, jmax25, rd25,
-                                                         vpd, tg_c, par, site))
+                                                         lma, Anet, wue, gsw, chi, nue, nphoto, rd25, site))
 global_optimal_traits_sites_select_nona <- na.omit(global_optimal_traits_sites_select)
 
 ### fit pca
-global_optimal_traits_sites_pca <- prcomp(global_optimal_traits_sites_select_nona[,c(1:4,6:7)], scale = T, center = T)
+global_optimal_traits_sites_pca <- prcomp(global_optimal_traits_sites_select_nona[,c(1:8)], scale = T, center = T)
 summary(global_optimal_traits_sites_pca)
 global_optimal_traits_sites_pca$rotation[,1:3]
 
@@ -734,13 +741,14 @@ pca_scores_sites$site <- global_optimal_traits_sites_select_nona$site
 global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites, 
                                                     aes(x = PC1, y = PC2, group = site, color = site)) +
   theme_minimal(base_size = 14) +
-  theme(axis.title = element_text(size = 18, face = "bold"),
+  theme(axis.title = element_text(size = 18),
         axis.text = element_text(size = 14),
         axis.line = element_line(color = "black", linewidth = 0.6),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  geom_point(alpha = 0.5, size = 0.5) +
-  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.1) +
+  geom_point(alpha = 0.1, size = 0.5) +
+  scale_color_manual(values = c("brown", "orange", "brown", "darkgreen", "lightgreen", "darkgreen", "orange", "lightgreen")) +
+  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_sites,
                aes(x = 0, y = 0, xend = PC1 * arrow_scale_sites, yend = PC2 * arrow_scale_sites, group = NULL, color = NULL),
@@ -748,47 +756,11 @@ global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites,
   geom_text(data = loadings_pca_sites,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC1", y = "PC2") +
-  guides(fill = guide_colorbar(title = "Density level"))
-
-global_optimal_traits_sites_pca_plot_PC1PC2_nolines <- ggplot(pca_scores_sites, aes(x = PC1, y = PC2, group = site, color = site)) +
-  theme_minimal(base_size = 14) +
-  theme(axis.title = element_text(size = 18, face = "bold"),
-        axis.text = element_text(size = 14),
-        axis.line = element_line(color = "black", linewidth = 0.6),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  geom_point(alpha = 0.5, size = 0.5) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
-  scale_fill_viridis_c(option = "turbo") +
-  labs(x = "PC1", y = "PC2") +
-  guides(fill = guide_colorbar(title = "Density level"))
-
-global_optimal_traits_sites_pca_plot_PC2PC3 <- ggplot(pca_scores_sites, aes(x = PC2, y = PC3, group = site, color = site)) +
-  theme_minimal(base_size = 14) +
-  theme(axis.title = element_text(size = 18, face = "bold"),
-        axis.text = element_text(size = 14),
-        axis.line = element_line(color = "black", linewidth = 0.6),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank()) +
-  geom_point(alpha = 0.5, size = 0.5) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
-  scale_fill_viridis_c(option = "turbo") +
-  geom_segment(data = loadings_pca_sites,
-               aes(x = 0, y = 0, xend = PC1 * arrow_scale_sites, yend = PC2 * arrow_scale_sites, group = NULL, color = NULL),
-               arrow = arrow(length = unit(0.25, "cm")), color = "black", linewidth = 0.6) +
-  geom_text(data = loadings_pca_sites,
-            aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
-            size = 4, fontface = "bold", parse = TRUE) +
-  labs(x = "PC2", y = "PC3") +
+  labs(x = "PC1", y = "PC2", color = 'Site') +
   guides(fill = guide_colorbar(title = "Density level"))
 
 # jpeg('results/plots/global_optimal_traits_sites_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
 # plot(global_optimal_traits_sites_pca_plot_PC1PC2)
-# dev.off()
-
-# jpeg('results/plots/global_optimal_traits_sites_pca_plot_PC1PC2_nolines.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_sites_pca_plot_PC1PC2_nolines)
 # dev.off()
 
 ################

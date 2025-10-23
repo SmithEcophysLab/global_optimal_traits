@@ -75,7 +75,16 @@ interpretable PCA plots
 		- analysis: confirmation of PFT strategies across environments
 		- stage: plots complete
 			- [global trait historgram plot](results/plots/global_optimal_traits_hist_all.jpeg)
-- to do: work on points 3 and 4 (start line 688)
+	3. within-site variability can be predicted through simulating variability in costs and environment
+		- figure: PCA for a select number of NEON sites representing:
+			- c4 grassland
+			- temp deciduous
+			- temp evergreem
+			- temp mixed
+		- analysis: TBD, where is there the most variability?
+		- stage: simulations done, figure need tweaked
+- to do: work on points 3 and 4 (or remove 4?)
+	- finesse figure for 3
 
 
 
