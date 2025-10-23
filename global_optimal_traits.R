@@ -2,6 +2,43 @@
 ## script to predict global optimal leaf traits
 ## still a bit of work to do!
 
+## load functions
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
 ## load libraries
 library(raster)
 library(RColorBrewer)
@@ -483,14 +520,14 @@ pca_scores_all$pft <- global_optimal_traits_all_select_nona$pft
 global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all, 
                                                     aes(x = PC1, y = PC2, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
-  theme(axis.title = element_text(size = 18, face = "bold"),
+  theme(axis.title = element_text(size = 18),
         axis.text = element_text(size = 14),
         axis.line = element_line(color = "black", linewidth = 0.6),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  geom_point(alpha = 0.3, size = 0.5) +
+  geom_point(alpha = 0.1, size = 0.5) +
   scale_color_manual(values = c("lightgreen", "darkgreen", "brown")) +
-  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_all,
                aes(x = 0, y = 0, xend = PC1 * arrow_scale_all, yend = PC2 * arrow_scale_all, group = NULL, color = NULL),
@@ -498,19 +535,19 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all,
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC1", y = "PC2") +
+  labs(x = "PC1 (51%)", y = "PC2 (28%)") +
   guides(fill = guide_colorbar(title = "Density level"))
 
-global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2, y = PC3, group = pft, color = pft)) +
+global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1, y = PC3, group = pft, color = pft)) +
   theme_minimal(base_size = 14) +
-  theme(axis.title = element_text(size = 18, face = "bold"),
+  theme(axis.title = element_text(size = 18),
         axis.text = element_text(size = 14),
         axis.line = element_line(color = "black", linewidth = 0.6),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
-  geom_point(alpha = 0.3, size = 0.5) +
+  geom_point(alpha = 0.1, size = 0.5) +
   scale_color_manual(values = c("lightgreen", "darkgreen", "brown")) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.5) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_all,
                aes(x = 0, y = 0, xend = PC1 * arrow_scale_all, yend = PC2 * arrow_scale_all, group = NULL, color = NULL),
@@ -518,16 +555,16 @@ global_optimal_traits_all_pca_plot_PC2PC3 <- ggplot(pca_scores_all, aes(x = PC2,
   geom_text(data = loadings_pca_all,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC2", y = "PC3") +
+  labs(x = "PC1 (51%)", y = "PC3 (16%)") +
   guides(fill = guide_colorbar(title = "Density level"))
 
-# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_all_pca_plot_PC1PC2)
-# dev.off()
+jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
+plot(global_optimal_traits_all_pca_plot_PC1PC2)
+dev.off()
 
-# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC2PC3.jpeg', width = 10, height = 10, units = 'in', res = 600)
-# plot(global_optimal_traits_all_pca_plot_PC2PC3)
-# dev.off()
+jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC3.jpeg', width = 10, height = 10, units = 'in', res = 600)
+plot(global_optimal_traits_all_pca_plot_PC1PC3)
+dev.off()
 
 #############################
 ### global sim trait histograms ##
@@ -539,43 +576,114 @@ global_optimal_traits_all_select_nona$c3c4[global_optimal_traits_all_select_nona
 
 global_optimal_traits_all_hist_Anet <- ggplot(data = global_optimal_traits_all_select_nona, 
                                               aes(x = Anet, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression(italic('A')[net] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_gsw <- ggplot(data = global_optimal_traits_all_select_nona, 
-                                             aes(x = gsw, fill = c3c4)) +
+                                              aes(x = gsw, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression(italic('g')[sw] * ' (mol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_wue <- ggplot(data = global_optimal_traits_all_select_nona, 
                                              aes(x = wue, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression('iWUE' * ' (µmol mol'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_rd25 <- ggplot(data = global_optimal_traits_all_select_nona, 
-                                             aes(x = rd25, fill = c3c4)) +
+                                              aes(x = rd25, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression(italic('R')[d25] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_chi <- ggplot(data = global_optimal_traits_all_select_nona, 
                                               aes(x = chi, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression(italic('χ') * ' (mol mol'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_nphoto <- ggplot(data = global_optimal_traits_all_select_nona, 
                                              aes(x = nphoto, fill = c3c4)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'))
+  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  labs(x = expression(italic('N')[photo] * ' (g m'^'-2'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_lma <- ggplot(data = global_optimal_traits_all_select_nona, 
-                                             aes(x = lma, fill = pft)) +
+                                                aes(x = lma, fill = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"))
+  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
+                    labels = c(expression('C'[3] * 'deciduous'), expression('C'[3] * 'evergreen'), expression('C'[4] * 'deciduous'))) +
+  labs(x = expression('LMA' * ' (g m'^'-2'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_nue <- ggplot(data = global_optimal_traits_all_select_nona, 
                                              aes(x = nue, fill = pft)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"))
+  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
+                    labels = c(expression('C'[3] * 'deciduous'), expression('C'[3] * 'evergreen'), expression('C'[4] * 'deciduous'))) +
+  labs(x = expression('NUE' * ' (µmol gN'^'-1' * ' s'^'-1' * ')'), y = 'Density', fill = '')
+
+jpeg(filename = "results/plots/global_optimal_traits_hist_all.jpeg", 
+     width = 26, height = 14, units = 'in', res = 600)
+multiplot(global_optimal_traits_all_hist_Anet,
+          global_optimal_traits_all_hist_lma,
+          global_optimal_traits_all_hist_gsw,
+          global_optimal_traits_all_hist_wue,
+          global_optimal_traits_all_hist_nphoto,
+          global_optimal_traits_all_hist_nue,
+          global_optimal_traits_all_hist_rd25,
+          cols = 4)
+dev.off()
+
 
 ##site plots
 ### combine model outputs with new category

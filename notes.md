@@ -61,4 +61,31 @@ interpretable PCA plots
 - to do: same simulations with added within site variability
 	- do this using mean and SD random draw for beta distributions from Cheaib
 		- for a select few sites: neon sites?
+
+## oct 23, 2025
+- main points revisited with status update
+	1. EEO can be used to predict global distributions of optimal photosynthetic strategies
+		- figure: global PCA plot with 3 PFTs for Anet, gsw, nphoto, chi, lma, nue, wue, rd25
+		- analysis: explain the predicted strategy/spatial variation
+		- stage: plots complete
+			- [PC1PC2 plot](results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg)
+			- [PC1PC3 plot](global_optimal_traits_all_pca_plot_PC1PC3.jpeg)
+	2. Traits separate between PFTs in some cases, but not others
+		- figure: trait histograms by PFT for Anet, gsw, nphoto, chi, lma, nue, wue, rd25
+		- analysis: confirmation of PFT strategies across environments
+		- stage: plots complete
+			- [global trait historgram plot](results/plots/global_optimal_traits_hist_all.jpeg)
+- to do: work on points 3 and 4 (start line 688)
+
+
+
+
+
+
+
+
+
+
+
+
 	
