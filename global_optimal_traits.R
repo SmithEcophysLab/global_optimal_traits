@@ -526,7 +526,7 @@ global_optimal_traits_all_pca_plot_PC1PC2 <- ggplot(pca_scores_all,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.1, size = 0.5) +
-  scale_color_manual(values = c("lightgreen", "darkgreen", "brown"),
+  scale_color_manual(values = c("cyan", "purple", "orange"),
                      labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
@@ -547,7 +547,7 @@ global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.1, size = 0.5) +
-  scale_color_manual(values = c("lightgreen", "darkgreen", "brown"),
+  scale_color_manual(values = c("cyan", "purple", "orange"),
                      labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   stat_density_2d(aes(fill = ..level..), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
@@ -560,13 +560,13 @@ global_optimal_traits_all_pca_plot_PC1PC3 <- ggplot(pca_scores_all, aes(x = PC1,
   labs(x = "PC1 (51%)", y = "PC3 (16%)", color = '') +
   guides(fill = guide_colorbar(title = "Density level"))
 
-jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
-plot(global_optimal_traits_all_pca_plot_PC1PC2)
-dev.off()
-
-jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC3.jpeg', width = 10, height = 10, units = 'in', res = 600)
-plot(global_optimal_traits_all_pca_plot_PC1PC3)
-dev.off()
+# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_pca_plot_PC1PC2)
+# dev.off()
+# 
+# jpeg('results/plots/global_optimal_traits_all_pca_plot_PC1PC3.jpeg', width = 10, height = 10, units = 'in', res = 600)
+# plot(global_optimal_traits_all_pca_plot_PC1PC3)
+# dev.off()
 
 #############################
 ### global sim trait histograms ##
@@ -585,7 +585,7 @@ global_optimal_traits_all_hist_Anet <- ggplot(data = global_optimal_traits_all_s
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression(italic('A')[net] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_gsw <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -597,7 +597,7 @@ global_optimal_traits_all_hist_gsw <- ggplot(data = global_optimal_traits_all_se
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression(italic('g')[sw] * ' (mol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_wue <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -609,7 +609,7 @@ global_optimal_traits_all_hist_wue <- ggplot(data = global_optimal_traits_all_se
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression('iWUE' * ' (µmol mol'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_rd25 <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -621,7 +621,7 @@ global_optimal_traits_all_hist_rd25 <- ggplot(data = global_optimal_traits_all_s
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression(italic('R')[d25] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_chi <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -633,7 +633,7 @@ global_optimal_traits_all_hist_chi <- ggplot(data = global_optimal_traits_all_se
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression(italic('χ') * ' (mol mol'^'-1'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_nphoto <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -645,7 +645,7 @@ global_optimal_traits_all_hist_nphoto <- ggplot(data = global_optimal_traits_all
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c('green', 'brown'), labels = c(expression('C'[3]), expression('C'[4]))) +
+  scale_fill_manual(values = c('blue', 'orange'), labels = c(expression('C'[3]), expression('C'[4]))) +
   labs(x = expression(italic('N')[photo] * ' (g m'^'-2'*')'), y = 'Density', fill = '')
 
 global_optimal_traits_all_hist_lma <- ggplot(data = global_optimal_traits_all_select_nona, 
@@ -657,7 +657,7 @@ global_optimal_traits_all_hist_lma <- ggplot(data = global_optimal_traits_all_se
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
+  scale_fill_manual(values = c("cyan", "purple", "orange"), 
                     labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   labs(x = expression('LMA' * ' (g m'^'-2'*')'), y = 'Density', fill = '')
 
@@ -670,22 +670,22 @@ global_optimal_traits_all_hist_nue <- ggplot(data = global_optimal_traits_all_se
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_density(alpha = 0.3) +
-  scale_fill_manual(values = c("lightgreen", "darkgreen", "brown"), 
+  scale_fill_manual(values = c("cyan", "purple", "orange"), 
                     labels = c(expression('C'[3] * ' deciduous'), expression('C'[3] * ' evergreen'), expression('C'[4] * ' deciduous'))) +
   labs(x = expression('NUE' * ' (µmol gN'^'-1' * ' s'^'-1' * ')'), y = 'Density', fill = '')
 
-jpeg(filename = "results/plots/global_optimal_traits_hist_all.jpeg", 
-     width = 26, height = 14, units = 'in', res = 600)
-multiplot(global_optimal_traits_all_hist_Anet,
-          global_optimal_traits_all_hist_chi,
-          global_optimal_traits_all_hist_gsw,
-          global_optimal_traits_all_hist_wue,
-          global_optimal_traits_all_hist_nphoto,
-          global_optimal_traits_all_hist_nue,
-          global_optimal_traits_all_hist_rd25,
-          global_optimal_traits_all_hist_lma,
-          cols = 4)
-dev.off()
+# jpeg(filename = "results/plots/global_optimal_traits_hist_all.jpeg", 
+#      width = 26, height = 14, units = 'in', res = 600)
+# multiplot(global_optimal_traits_all_hist_Anet,
+#           global_optimal_traits_all_hist_chi,
+#           global_optimal_traits_all_hist_gsw,
+#           global_optimal_traits_all_hist_wue,
+#           global_optimal_traits_all_hist_nphoto,
+#           global_optimal_traits_all_hist_nue,
+#           global_optimal_traits_all_hist_rd25,
+#           global_optimal_traits_all_hist_lma,
+#           cols = 4)
+# dev.off()
 
 #############################
 ### site-level PCA ##
@@ -747,7 +747,9 @@ global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   geom_point(alpha = 0.1, size = 0.5) +
-  scale_color_manual(values = c("brown", "orange", "brown", "darkgreen", "lightgreen", "darkgreen", "orange", "lightgreen")) +
+  scale_color_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                     labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                                expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon", contour = TRUE, alpha = 0.3) +
   scale_fill_viridis_c(option = "turbo") +
   geom_segment(data = loadings_pca_sites,
@@ -756,12 +758,23 @@ global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites,
   geom_text(data = loadings_pca_sites,
             aes(x = label_x, y = label_y, label = trait, group = NULL, color = NULL),
             size = 4, fontface = "bold", parse = TRUE, show.legend = FALSE) +
-  labs(x = "PC1", y = "PC2", color = 'Site') +
+  labs(x = "PC1 (55%)", y = "PC2 (20%)", color = 'Site') +
   guides(fill = guide_colorbar(title = "Density level"))
 
 # jpeg('results/plots/global_optimal_traits_sites_pca_plot_PC1PC2.jpeg', width = 10, height = 10, units = 'in', res = 600)
 # plot(global_optimal_traits_sites_pca_plot_PC1PC2)
 # dev.off()
+
+
+
+
+
+
+
+
+
+
+
 
 ################
 ## future sims##

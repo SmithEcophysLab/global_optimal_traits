@@ -81,10 +81,10 @@ interpretable PCA plots
 			- temp deciduous
 			- temp evergreem
 			- temp mixed
-		- analysis: TBD, where is there the most variability?
-		- stage: simulations done, figure need tweaked
-- to do: work on points 3 and 4 (or remove 4?)
-	- finesse figure for 3
+		- analysis: more within than across site variability
+		- stage: figure complete
+			- [site PCA plot](results/plots/global_optimal_traits_sites_pca_plot_PC1PC2.jpeg)
+- to do: work on point 4 (or remove 4?)
 
 
 
