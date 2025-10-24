@@ -117,8 +117,8 @@ iso_data_c3$chi <- (iso_data_c3$big_D13 - (iso_data_c3$a_frac + (iso_data_c3$f_f
 iso_data_c3$beta <- 1.6 * iso_data_c3$nstar * iso_data_c3$vpd_kpa * 1000 *
   (((iso_data_c3$chi - (iso_data_c3$gammastar_pa/iso_data_c3$ca))^2)/
                                                  (((1- iso_data_c3$chi)^2) * (iso_data_c3$km_pa + iso_data_c3$gammastar_pa)))
-hist(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta)
-hist(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
+# hist(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta)
+# hist(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
 
 ### calculate beta for c4
 iso_data_c4$gammastar_pa <- calc_gammastar_pa(temp = iso_data_c4$tmp, z = iso_data_c4$z)
@@ -133,12 +133,12 @@ iso_data_c4$f_frac <- 12
 iso_data_c4$chi <- (iso_data_c4$big_D13 - (iso_data_c4$a_frac + (iso_data_c4$f_frac * (iso_data_c4$gammastar_pa/iso_data_c4$ca))))/
   (iso_data_c4$b_frac - iso_data_c4$a_frac)
 # hist(iso_data_c4$chi)
-hist(subset(iso_data_c4, chi > 0)$chi)
+# hist(subset(iso_data_c4, chi > 0)$chi)
 iso_data_c4$beta <- 1.6 * iso_data_c4$nstar * iso_data_c4$vpd_kpa * 1000 *
   (((iso_data_c4$chi)^2)/
      (((1- iso_data_c4$chi)^2) * (iso_data_c4$kp_pa)))
-hist(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta)
-hist(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
+# hist(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta)
+# hist(log(subset(iso_data_c4, chi < 0.95 & chi > 0.1)$beta))
 
 ### calculate mean and stdev beta for c3 and c4
 beta_c3_mean <- mean(log(subset(iso_data_c3, chi < 0.95 & chi > 0.2)$beta))
@@ -765,10 +765,133 @@ global_optimal_traits_sites_pca_plot_PC1PC2 <- ggplot(pca_scores_sites,
 # plot(global_optimal_traits_sites_pca_plot_PC1PC2)
 # dev.off()
 
+#############################
+### site-level histograms ##
+#############################
+global_optimal_traits_sites_hist_Anet <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                              aes(x = Anet, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression(italic('A')[net] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
+global_optimal_traits_sites_hist_gsw <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                             aes(x = gsw, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression(italic('g')[sw] * ' (mol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
+global_optimal_traits_sites_hist_wue <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                             aes(x = wue, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression('iWUE' * ' (µmol mol'^'-1'*')'), y = 'Density', fill = '')
 
+global_optimal_traits_sites_hist_rd25 <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                              aes(x = rd25, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression(italic('R')[d25] * ' (µmol m'^'2'*' s'^'-1'*')'), y = 'Density', fill = '')
 
+global_optimal_traits_sites_hist_chi <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                             aes(x = chi, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression(italic('χ') * ' (mol mol'^'-1'*')'), y = 'Density', fill = '')
+
+global_optimal_traits_sites_hist_nphoto <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                                aes(x = nphoto, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression(italic('N')[photo] * ' (g m'^'-2'*')'), y = 'Density', fill = '')
+
+global_optimal_traits_sites_hist_lma <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                             aes(x = lma, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                     labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                                expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression('LMA' * ' (g m'^'-2'*')'), y = 'Density', fill = '')
+
+global_optimal_traits_sites_hist_nue <- ggplot(data = global_optimal_traits_sites_select_nona, 
+                                             aes(x = nue, fill = site)) +
+  theme_minimal(base_size = 14) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 14),
+        axis.line = element_line(color = "black", linewidth = 0.6),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  scale_fill_manual(values = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+                    labels = c(expression("CPER (C"[4]*"D)"), expression("HARV (C"[3]*"M)"), expression("KONZ (C"[4]*"D)"), expression("PUUM (C"[3]*"E)"),
+                               expression("SCBI (C"[3]*"D)"), expression("SJER (C"[3]*"E)"), expression("TALL (C"[3]*"M)"), expression("UNDE (C"[3]*"D)"))) +
+  labs(x = expression('NUE' * ' (µmol gN'^'-1' * ' s'^'-1' * ')'), y = 'Density', fill = '')
+
+# jpeg(filename = "results/plots/global_optimal_traits_hist_sites.jpeg", 
+#     width = 26, height = 14, units = 'in', res = 600)
+# multiplot(global_optimal_traits_sites_hist_Anet,
+#          global_optimal_traits_sites_hist_chi,
+#          global_optimal_traits_sites_hist_gsw,
+#          global_optimal_traits_sites_hist_wue,
+#          global_optimal_traits_sites_hist_nphoto,
+#          global_optimal_traits_sites_hist_nue,
+#          global_optimal_traits_sites_hist_rd25,
+#          global_optimal_traits_sites_hist_lma,
+#          cols = 4)
+# dev.off()
 
 
 
