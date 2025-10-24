@@ -92,6 +92,8 @@ interpretable PCA plots
 		- **site-level histogram made!**
 			- [site-level trait histogram plot](results/plots/global_optimal_traits_hist_sites.jpeg)
 	- site map would also be interesting, if only for supplement
+		- MADE ONE!
+			- [site map](results/plots/global_optimal_traits_site_map.jpeg)
 	- point 4 would maybe be too big of stretch
 		- should skip in lieu of writing for now
 	- should I consider reducing the range of input values for the site simulations?

@@ -45,6 +45,8 @@ library(RColorBrewer)
 library(maps)
 library(tidyverse)
 library(factoextra)
+library(sp)
+library(usmap)
 
 ## source optimality model and related functions
 source('../optimal_vcmax_r/calc_optimal_vcmax.R')
@@ -894,8 +896,29 @@ global_optimal_traits_sites_hist_nue <- ggplot(data = global_optimal_traits_site
 # dev.off()
 
 
+#############################
+### map of sites ##
+#############################
 
+neon_data_sub <- subset(neon_data, site_id %in% c('CPER', 'HARV', 'KONZ', 'PUUM', 'SCBI', 'SJER', 'TALL', 'UNDE'))
+neon_data_sub$site_id
+neon_data_sub_latlon <- select(neon_data_sub, longitude, latitude)
+neon_data_sub_latlon_trans <- usmap_transform(neon_data_sub_latlon,
+                                              input_names = c("longitude", "latitude"))
 
+site_map <- plot_usmap("states") +
+  geom_sf(data = neon_data_sub_latlon_trans, 
+             color = c("orange1", "red1", "orange4", "purple1", "cyan1", "purple4", "red4", "cyan4"),
+             size = 3,
+          shape = 1, stroke = 2) +
+  geom_sf(data = neon_data_sub_latlon_trans, 
+          color = 'black',
+          size = 1)
+  
+jpeg(filename = "results/plots/global_optimal_traits_site_map.jpeg", 
+   width = 7, height = 3, units = 'in', res = 600)
+plot(site_map)
+dev.off()
 
 
 
