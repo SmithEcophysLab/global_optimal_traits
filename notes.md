@@ -97,6 +97,54 @@ interpretable PCA plots
 	- point 4 would maybe be too big of stretch
 		- should skip in lieu of writing for now
 	- should I consider reducing the range of input values for the site simulations?
+		- **no, they look reasonable**
+
+## oct 28, 2025
+- what are the main messages
+	1. EEO can be used to predict global distributions of optimal photosynthetic strategies
+		- figure: global PCA plot with 3 PFTs for Anet, gsw, nphoto, chi, lma, nue, wue, rd25
+		- analysis: explain the predicted strategy/spatial variation
+			- [PC1PC2 plot](results/plots/global_optimal_traits_all_pca_plot_PC1PC2.jpeg)
+				- PC1: separation by c3/c4 (nphoto, wue, chi, lma)
+				- PC2: separation by aridity (Anet, gsw, nue)
+			- [PC1PC3 plot](global_optimal_traits_all_pca_plot_PC1PC3.jpeg)
+				- PC3: biggest loadings are rd and lma (rd costs?)
+	2. Traits separate between PFTs in some cases, but not others
+		- figure: trait histograms by PFT for Anet, gsw, nphoto, chi, lma, nue, wue, rd25
+		- analysis: confirmation of diversity of PFT strategies across environments
+			- [global trait historgram plot](results/plots/global_optimal_traits_hist_all.jpeg)
+				- Anet: C4 a bit higher, but lots of overlap
+				- chi: c4 lower, with some overlap
+				- gsw: c3 a bit higher with lots overlap, two peaks per pft (aridity)
+				- wue: c4 higher with some overlap
+				- nphoto: c4 higher
+				- nue: two peaks per pft (aridity)
+				- rd: c3 higher but lots of overlap
+				- lma: c3e > c3d > c4, but osme overlap
+	3. within-site variability can be predicted through simulating variability in costs and environment
+		- figure: PCA for a select number of NEON sites representing:
+			- c4 grassland
+			- temp deciduous
+			- temp evergreem
+			- temp mixed
+		- analysis: more within than across site variability
+			- [site PCA plot](results/plots/global_optimal_traits_sites_pca_plot_PC1PC2.jpeg)
+				- c4 sites separate by wue and chi
+				- way more w/in site variability in strategy than across site
+				- sjer seems to be slight outlier (evergreen site in AL)
+				- potentially lots of successful ways to be a plant in a given site
+	4. within-site variability by trait shows overlap in some traits, not others
+		- figure: site-level trait histograms
+		- analysis: lots of within-site variability, more overlap than in global sims
+			- [site histrograms](results/plots/global_optimal_traits_hist_sites.jpeg)
+				- Anet: lots of overlap
+				- chi: c4 a bit lower, but plenty of overlap
+				- gsw: lots of overlap
+				- wue: c4 a bit higher, but lots of overlap
+				- nphoto: c4 higher
+				- nue: lots of overlap
+				- rd: lots of overlap
+				- lma: clear pft separation
 
 
 
